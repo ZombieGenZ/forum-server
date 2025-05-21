@@ -17,6 +17,11 @@ interface UserType {
   forget_password_token?: string
   avatar?: ImageType
   cover?: ImageType
+  penalty?: {
+    created_by: ObjectId
+    reason: string
+    expired_at: Date
+  } | null
   created_at?: Date
   updated_at?: Date
 }
@@ -35,10 +40,17 @@ export default class User {
   forget_password_token: string
   avatar: ImageType
   cover: ImageType
+  penalty: {
+    created_by: ObjectId
+    reason: string
+    expired_at: Date
+  } | null
   created_at: Date
   updated_at: Date
 
   constructor(user: UserType) {
+    const date = new Date()
+
     this._id = user._id || new ObjectId()
     this.display_name = user.display_name
     this.username = user.username
@@ -62,7 +74,8 @@ export default class User {
       url: '',
       size: 0
     }
-    this.created_at = user.created_at || new Date()
-    this.updated_at = user.updated_at || new Date()
+    this.penalty = user.penalty || null
+    this.created_at = user.created_at || date
+    this.updated_at = user.updated_at || date
   }
 }

@@ -13,7 +13,6 @@ import databaseService from './services/database.services'
 import { ObjectId } from 'mongodb'
 // import { verifyToken } from './utils/jwt.utils'
 // import { TokenPayload } from './models/requests/authentication.requests'
-// import { defaultErrorHandler, notFoundHandler } from './middlewares/errors.middlewares'
 // import { UserRoleEnum } from './constants/users.constants'
 import expressUserAgent from 'express-useragent'
 // import runAllCrons from './jobs/global.jobs'
@@ -57,8 +56,9 @@ app.use(bodyParser.urlencoded({ extended: true }))
 app.set('view engine', 'ejs')
 app.set('trust proxy', true)
 
-// // import api router
-// import api_users from '~/routes/users.routes'
+// import api router
+import api_users from '~/routes/users.routes'
+import { defaultErrorHandler, notFoundHandler } from './middlewares/errors.middlewares'
 // import api_categories from '~/routes/categories.routes'
 // import api_products from '~/routes/products.routes'
 // import api_voucher_public from '~/routes/voucherPublic.routes'
@@ -70,7 +70,7 @@ app.set('trust proxy', true)
 // import api_notification from '~/routes/notification.routes'
 // import api_auto_call_service from '~/routes/autoCallService.routes'
 
-// app.use('/api/users', api_users)
+app.use('/api/users', api_users)
 // app.use('/api/categories', api_categories)
 // app.use('/api/products', api_products)
 // app.use('/api/voucher-public', api_voucher_public)
@@ -82,9 +82,9 @@ app.set('trust proxy', true)
 // app.use('/api/notification', api_notification)
 // app.use('/api/auto-call-service', api_auto_call_service)
 
-// app.use(notFoundHandler);
+app.use(notFoundHandler)
 
-// app.use(defaultErrorHandler)
+app.use(defaultErrorHandler)
 
 // // realtime logic
 // io.on('connection', (socket: Socket) => {
