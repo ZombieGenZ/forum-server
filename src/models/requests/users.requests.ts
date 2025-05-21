@@ -16,42 +16,36 @@ export interface LogoutUserRequestBody {
   refresh_token: string
 }
 
-// export interface VerifyEmailVerifyTokenRequestsBody {
-//   language?: string
-//   token: string
-// }
+export interface VerifyTokenRequestBody {
+  token: string
+}
 
-// export interface VerifyAccountRequestsBody {
-//   language?: string
-//   refresh_token: string
-// }
+export interface VerifyAccountRequestBody {
+  refresh_token: string
+}
 
-// export interface SendForgotPasswordRequestsBody {
-//   language?: string
-//   refresh_token: string
-// }
+export interface SendForgotPasswordRequestBody {
+  refresh_token: string
+}
 
-// export interface VerifyForgotPasswordTokenRequestsBody {
-//   language?: string
-//   token: string
-// }
+export interface VerifyForgotPasswordTokenRequestBody {
+  token: string
+}
 
-// export interface ForgotPasswordRequestsBody {
-//   language?: string
-//   token: string
-//   new_password: string
-//   confirm_new_password: string
-// }
+export interface ForgotPasswordRequestBody {
+  token: string
+  new_password: string
+  confirm_new_password: string
+}
 
-// export interface ChangeInfomationRequestsBody {
-//   language?: string
-//   display_name: string
-//   phone: string
-// }
+export interface ChangeInfomationRequestBody {
+  display_name: string
+  username: string
+  phone: string
+}
 
-// export interface ChangePasswordRequestsBody {
-//   language?: string
-//   password: string
-//   new_password: string
-//   confirm_new_password: string
-// }
+export interface ChangePasswordRequestBody {
+  password: string
+  new_password: string
+  confirm_new_password: string
+}
