@@ -12,3 +12,8 @@ dist-ssr
 
 .vscode/*
 .idea
+
+public/images/upload/**
+!public/images/upload/posts/
+!public/images/upload/posts/temporary
+!public/images/upload/posts/temporary/.gitkeep

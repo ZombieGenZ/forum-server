@@ -142,230 +142,230 @@ class UserService {
       token: token
     })
   }
-  async sendEmailVerify(user: User) {
-    const verifyToken = await this.signEmailVerify(user._id.toString())
-    const verifyUrl = `${process.env.APP_URL}/verify-account?token=${verifyToken}`
+  // async sendEmailVerify(user: User) {
+  //   const verifyToken = await this.signEmailVerify(user._id.toString())
+  //   const verifyUrl = `${process.env.APP_URL}/verify-account?token=${verifyToken}`
 
-    const email_verify_subject = MAIL.VERIFY_ACCOUNT(verifyUrl).subject
-    const email_verify_html = MAIL.VERIFY_ACCOUNT(verifyUrl).html
+  //   const email_verify_subject = MAIL.VERIFY_ACCOUNT(verifyUrl).subject
+  //   const email_verify_html = MAIL.VERIFY_ACCOUNT(verifyUrl).html
 
-    await Promise.all([
-      databaseService.users.updateOne(
-        {
-          _id: user._id
-        },
-        {
-          $set: {
-            verify_token: verifyToken
-          },
-          $currentDate: {
-            updated_at: true
-          }
-        }
-      ),
-      sendMail(user.email, email_verify_subject, email_verify_html)
-    ])
-  }
-  async verifyToken(payload: VerifyTokenRequestBody) {
-    try {
-      const decoded_verify_token = (await verifyToken({
-        token: payload.token,
-        publicKey: process.env.SECURITY_JWT_SECRET_VERIFY_TOKEN as string
-      })) as TokenPayload
+  //   await Promise.all([
+  //     databaseService.users.updateOne(
+  //       {
+  //         _id: user._id
+  //       },
+  //       {
+  //         $set: {
+  //           verify_token: verifyToken
+  //         },
+  //         $currentDate: {
+  //           updated_at: true
+  //         }
+  //       }
+  //     ),
+  //     sendMail(user.email, email_verify_subject, email_verify_html)
+  //   ])
+  // }
+  // async verifyToken(payload: VerifyTokenRequestBody) {
+  //   try {
+  //     const decoded_verify_token = (await verifyToken({
+  //       token: payload.token,
+  //       publicKey: process.env.SECURITY_JWT_SECRET_VERIFY_TOKEN as string
+  //     })) as TokenPayload
 
-      if (!decoded_verify_token || decoded_verify_token.token_type !== TokenType.VerifyToken) {
-        return false
-      }
+  //     if (!decoded_verify_token || decoded_verify_token.token_type !== TokenType.VerifyToken) {
+  //       return false
+  //     }
 
-      const user = await databaseService.users.findOne({
-        _id: new ObjectId(decoded_verify_token.user_id),
-        email_verify_token: payload.token,
-        user_type: UserTypeEnum.UNVERIFIED
-      })
+  //     const user = await databaseService.users.findOne({
+  //       _id: new ObjectId(decoded_verify_token.user_id),
+  //       email_verify_token: payload.token,
+  //       user_type: UserTypeEnum.UNVERIFIED
+  //     })
 
-      if (!user) {
-        return false
-      }
+  //     if (!user) {
+  //       return false
+  //     }
 
-      return true
-    } catch {
-      return false
-    }
-  }
-  async verifyAccount(user: User) {
-    // const data = {
-    //   user_id: user._id.toString()
-    // }
-    await Promise.all([
-      databaseService.users.updateOne(
-        {
-          _id: user._id
-        },
-        {
-          $set: {
-            user_type: UserTypeEnum.VERIFIED,
-            email_verify_token: ''
-          },
-          $currentDate: {
-            updated_at: true
-          }
-        }
-      )
-      // notificationRealtime(`freshSync-user-${user._id}`, 'verify-account', data)
-    ])
-  }
-  async sendForgotPassword(user: User) {
-    const forgotPasswordToken = await this.signForgotPassword(user._id.toString())
-    const forgotPasswordUrl = `${process.env.APP_URL}/forgot-password?token=${forgotPasswordToken}`
+  //     return true
+  //   } catch {
+  //     return false
+  //   }
+  // }
+  // async verifyAccount(user: User) {
+  //   // const data = {
+  //   //   user_id: user._id.toString()
+  //   // }
+  //   await Promise.all([
+  //     databaseService.users.updateOne(
+  //       {
+  //         _id: user._id
+  //       },
+  //       {
+  //         $set: {
+  //           user_type: UserTypeEnum.VERIFIED,
+  //           email_verify_token: ''
+  //         },
+  //         $currentDate: {
+  //           updated_at: true
+  //         }
+  //       }
+  //     )
+  //     // notificationRealtime(`freshSync-user-${user._id}`, 'verify-account', data)
+  //   ])
+  // }
+  // async sendForgotPassword(user: User) {
+  //   const forgotPasswordToken = await this.signForgotPassword(user._id.toString())
+  //   const forgotPasswordUrl = `${process.env.APP_URL}/forgot-password?token=${forgotPasswordToken}`
 
-    const email_forgot_password_subject = MAIL.FORGOT_PASSWORD(forgotPasswordUrl).subject
-    const email_forgot_password_html = MAIL.FORGOT_PASSWORD(forgotPasswordUrl).html
+  //   const email_forgot_password_subject = MAIL.FORGOT_PASSWORD(forgotPasswordUrl).subject
+  //   const email_forgot_password_html = MAIL.FORGOT_PASSWORD(forgotPasswordUrl).html
 
-    await Promise.all([
-      databaseService.users.updateOne(
-        {
-          _id: user._id
-        },
-        {
-          $set: {
-            forgot_password_token: forgotPasswordToken
-          },
-          $currentDate: {
-            updated_at: true
-          }
-        }
-      ),
-      sendMail(user.email, email_forgot_password_subject, email_forgot_password_html)
-    ])
-  }
-  async verifyForgotPasswordToken(payload: VerifyForgotPasswordTokenRequestBody) {
-    try {
-      const decoded_forgot_password_token = (await verifyToken({
-        token: payload.token,
-        publicKey: process.env.SECURITY_JWT_SECRET_FORGOT_PASSWORD_TOKEN as string
-      })) as TokenPayload
+  //   await Promise.all([
+  //     databaseService.users.updateOne(
+  //       {
+  //         _id: user._id
+  //       },
+  //       {
+  //         $set: {
+  //           forgot_password_token: forgotPasswordToken
+  //         },
+  //         $currentDate: {
+  //           updated_at: true
+  //         }
+  //       }
+  //     ),
+  //     sendMail(user.email, email_forgot_password_subject, email_forgot_password_html)
+  //   ])
+  // }
+  // async verifyForgotPasswordToken(payload: VerifyForgotPasswordTokenRequestBody) {
+  //   try {
+  //     const decoded_forgot_password_token = (await verifyToken({
+  //       token: payload.token,
+  //       publicKey: process.env.SECURITY_JWT_SECRET_FORGOT_PASSWORD_TOKEN as string
+  //     })) as TokenPayload
 
-      if (
-        !decoded_forgot_password_token ||
-        decoded_forgot_password_token.token_type !== TokenType.ForgotPasswordToken
-      ) {
-        return false
-      }
+  //     if (
+  //       !decoded_forgot_password_token ||
+  //       decoded_forgot_password_token.token_type !== TokenType.ForgotPasswordToken
+  //     ) {
+  //       return false
+  //     }
 
-      const user = await databaseService.users.findOne({
-        _id: new ObjectId(decoded_forgot_password_token.user_id),
-        forgot_password_token: payload.token
-      })
+  //     const user = await databaseService.users.findOne({
+  //       _id: new ObjectId(decoded_forgot_password_token.user_id),
+  //       forgot_password_token: payload.token
+  //     })
 
-      if (!user) {
-        return false
-      }
+  //     if (!user) {
+  //       return false
+  //     }
 
-      return true
-    } catch {
-      return false
-    }
-  }
-  async forgotPassword(
-    user: User,
-    payload: ForgotPasswordRequestBody,
-    location: string,
-    ip: string,
-    browser: string,
-    os: string
-  ) {
-    const date = formatDateFull2(new Date())
-    const email_change_password_subject = MAIL.CHANGE_PASSWORD(date, location, ip, browser, os).subject
-    const email_change_password_html = MAIL.CHANGE_PASSWORD(date, location, ip, browser, os).html
+  //     return true
+  //   } catch {
+  //     return false
+  //   }
+  // }
+  // async forgotPassword(
+  //   user: User,
+  //   payload: ForgotPasswordRequestBody,
+  //   location: string,
+  //   ip: string,
+  //   browser: string,
+  //   os: string
+  // ) {
+  //   const date = formatDateFull2(new Date())
+  //   const email_change_password_subject = MAIL.CHANGE_PASSWORD(date, location, ip, browser, os).subject
+  //   const email_change_password_html = MAIL.CHANGE_PASSWORD(date, location, ip, browser, os).html
 
-    // const data = {
-    //   date
-    // }
+  //   // const data = {
+  //   //   date
+  //   // }
 
-    await Promise.all([
-      databaseService.users.updateOne(
-        {
-          _id: user._id
-        },
-        {
-          $set: {
-            password: HashPassword(payload.new_password),
-            forgot_password_token: ''
-          },
-          $currentDate: {
-            updated_at: true
-          }
-        }
-      ),
-      databaseService.refreshToken.deleteMany({
-        user_id: user._id
-      }),
-      // notificationRealtime(`freshSync-user-${user._id}`, 'logout', `user/${user._id}/logout`, data),
-      sendMail(user.email, email_change_password_subject, email_change_password_html)
-    ])
-  }
-  async changeInfomation(payload: ChangeInfomationRequestBody, user: User) {
-    // const data = {
-    //   display_name: payload.display_name,
-    //   phone: payload.phone
-    // }
+  //   await Promise.all([
+  //     databaseService.users.updateOne(
+  //       {
+  //         _id: user._id
+  //       },
+  //       {
+  //         $set: {
+  //           password: HashPassword(payload.new_password),
+  //           forgot_password_token: ''
+  //         },
+  //         $currentDate: {
+  //           updated_at: true
+  //         }
+  //       }
+  //     ),
+  //     databaseService.refreshToken.deleteMany({
+  //       user_id: user._id
+  //     }),
+  //     // notificationRealtime(`freshSync-user-${user._id}`, 'logout', `user/${user._id}/logout`, data),
+  //     sendMail(user.email, email_change_password_subject, email_change_password_html)
+  //   ])
+  // }
+  // async changeInfomation(payload: ChangeInfomationRequestBody, user: User) {
+  //   // const data = {
+  //   //   display_name: payload.display_name,
+  //   //   phone: payload.phone
+  //   // }
 
-    await Promise.all([
-      databaseService.users.updateOne(
-        {
-          _id: user._id
-        },
-        {
-          $set: {
-            display_name: payload.display_name,
-            username: payload.username,
-            phone: payload.phone
-          },
-          $currentDate: {
-            updated_at: true
-          }
-        }
-      )
-      // notificationRealtime(`freshSync-admin`, 'change-infomation', `account-management/change-infomation`, data)
-    ])
-  }
-  async changePassword(
-    payload: ChangePasswordRequestBody,
-    user: User,
-    location: string,
-    ip: string,
-    browser: string,
-    os: string
-  ) {
-    const date = formatDateFull2(new Date())
-    const email_change_password_subject = MAIL.CHANGE_PASSWORD(date, location, ip, browser, os).subject
-    const email_change_password_html = MAIL.CHANGE_PASSWORD(date, location, ip, browser, os).html
+  //   await Promise.all([
+  //     databaseService.users.updateOne(
+  //       {
+  //         _id: user._id
+  //       },
+  //       {
+  //         $set: {
+  //           display_name: payload.display_name,
+  //           username: payload.username,
+  //           phone: payload.phone
+  //         },
+  //         $currentDate: {
+  //           updated_at: true
+  //         }
+  //       }
+  //     )
+  //     // notificationRealtime(`freshSync-admin`, 'change-infomation', `account-management/change-infomation`, data)
+  //   ])
+  // }
+  // async changePassword(
+  //   payload: ChangePasswordRequestBody,
+  //   user: User,
+  //   location: string,
+  //   ip: string,
+  //   browser: string,
+  //   os: string
+  // ) {
+  //   const date = formatDateFull2(new Date())
+  //   const email_change_password_subject = MAIL.CHANGE_PASSWORD(date, location, ip, browser, os).subject
+  //   const email_change_password_html = MAIL.CHANGE_PASSWORD(date, location, ip, browser, os).html
 
-    // const data = {
-    //   date
-    // }
+  //   // const data = {
+  //   //   date
+  //   // }
 
-    await Promise.all([
-      databaseService.users.updateOne(
-        {
-          _id: user._id
-        },
-        {
-          $set: {
-            password: HashPassword(payload.new_password)
-          },
-          $currentDate: {
-            updated_at: true
-          }
-        }
-      ),
-      databaseService.refreshToken.deleteMany({
-        user_id: user._id
-      }),
-      // notificationRealtime(`freshSync-user-${user._id}`, 'logout', `user/${user._id}/logout`, data),
-      sendMail(user.email, email_change_password_subject, email_change_password_html)
-    ])
-  }
+  //   await Promise.all([
+  //     databaseService.users.updateOne(
+  //       {
+  //         _id: user._id
+  //       },
+  //       {
+  //         $set: {
+  //           password: HashPassword(payload.new_password)
+  //         },
+  //         $currentDate: {
+  //           updated_at: true
+  //         }
+  //       }
+  //     ),
+  //     databaseService.refreshToken.deleteMany({
+  //       user_id: user._id
+  //     }),
+  //     // notificationRealtime(`freshSync-user-${user._id}`, 'logout', `user/${user._id}/logout`, data),
+  //     sendMail(user.email, email_change_password_subject, email_change_password_html)
+  //   ])
+  // }
 }
 
 const userService = new UserService()

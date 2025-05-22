@@ -1,9 +1,9 @@
 export class MESSAGE {
-    static SYSTEM_MESSAGE = {
+  static SYSTEM_MESSAGE = {
     VALIDATION_ERROR: 'Lỗi dữ liệu đầu vào'
   } as const
 
-    static AUTHENTICATE_MESSAGE = {
+  static AUTHENTICATE_MESSAGE = {
     ACCESS_TOKEN_IS_REQUIRED: 'Không được bỏ trống Access token',
     ACCESS_TOKEN_MUST_BE_A_STRING: 'Access token phải là một chuỗi ký tự',
     ACCESS_TOKEN_INVALID: 'Access token không hợp lệ',
@@ -15,7 +15,7 @@ export class MESSAGE {
     YOU_DONT_HAVE_PERMISSION_TO_DO_THIS: 'Bạn không có quyền làm điều này'
   } as const
 
-    static USER_MESSAGE = {
+  static USER_MESSAGE = {
     DISPLAY_NAME_IS_REQUIRED: 'Không được bỏ trống tên hiển thị',
     DISPLAY_NAME_MUST_BE_A_STRING: 'Tên hiển thị phải là chuỗi ký tự',
     DISPLAY_NAME_LENGTH_MUST_BE_FROM_1_TO_50: 'Tên hiển thị phải có độ dài từ 1 đến 50 ký tự',
@@ -30,9 +30,11 @@ export class MESSAGE {
     EMAIL_IS_NOT_VALID: 'Địa chỉ email không đúng định dạng',
     EMAIL_ALREADY_EXISTS: 'Địa chỉ email đã được sử dụng',
     EMAIL_OR_PHONE_OR_USERNAME_IS_REQUIRED: 'Không được bỏ trống địa chỉ email, số điện thoại hoặc tên tài khoản',
-    EMAIL_OR_PHONE_OR_USERNAME_MUST_BE_A_STRING: 'Địa chỉ email, số điện thoại hoặc tên tài khoản phải là một chuỗi ký tự',
+    EMAIL_OR_PHONE_OR_USERNAME_MUST_BE_A_STRING:
+      'Địa chỉ email, số điện thoại hoặc tên tài khoản phải là một chuỗi ký tự',
     EMAIL_OR_PHONE_OR_USERNAME_IS_NOT_VALID: 'Địa chỉ email, số điện thoại hoặc tên tài khoản không hợp lệ',
-    EMAIL_OR_PHONE_OR_USERNAME_OR_PASSWORD_IS_NOT_VALID: 'Địa chỉ email, số điện thoại, tên tài khoản hoặc mật khẩu không hợp lệ',
+    EMAIL_OR_PHONE_OR_USERNAME_OR_PASSWORD_IS_NOT_VALID:
+      'Địa chỉ email, số điện thoại, tên tài khoản hoặc mật khẩu không hợp lệ',
     EMAIL_NOT_FOUND: 'Email không tồn tại',
     PHONE_IS_REQUIRED: 'Không được bỏ trống số điện thoại',
     PHONE_MUST_BE_A_STRING: 'Số điện thoại phải là một chuỗi ký tự',
@@ -81,5 +83,11 @@ export class MESSAGE {
     VERIFY_FORGOT_PASSWORD_TOKEN_FAILURE: 'Xác thực token yêu cầu đặt lại mật khẩu thất bại',
     VERIFY_EMAIL_VERIFY_TOKEN_SUCCESS: 'Xác thực token xác thực tài khoản thành công',
     VERIFY_EMAIL_VERIFY_TOKEN_FAILURE: 'Xác thực token xác thực tài khoản thất bại'
+  } as const
+
+  static FILE_MANAGEMENT_MESSAGE = {
+    IMAGE_IS_REQUIRED: 'Không được bỏ trống hình ảnh',
+    UPLOAD_IMAGE_SUCCESS: 'Tải lên hình ảnh thành công',
+    UPLOAD_IMAGE_FAILURE: 'Tải lên hình ảnh thất bại'
   } as const
 }

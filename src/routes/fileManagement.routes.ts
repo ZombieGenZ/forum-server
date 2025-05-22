@@ -1,0 +1,29 @@
+import express from 'express'
+import { registerUserController } from '~/controllers/users.controllers'
+import { authenticateUploadValidator } from '~/middlewares/authenticate.middlewares copy'
+import { setupUploadImage } from '~/middlewares/fileManagement.middlewares'
+import { wrapRequestHandler } from '~/utils/handlers.utils'
+import { upload } from '~/utils/image.utils'
+const router = express.Router()
+
+/*
+ * Description: Tải lên một tệp hình ảnh lên máy chủ
+ * Path: /api/file-management/upload-image
+ * Method: POST
+ * headers: {
+ *    authorization?: Bearer <token>
+ * },
+ * body: {
+ *    refresh_token: string,
+ *    image: file
+ * }
+ */
+router.post(
+  '/upload-image',
+  upload.single('image'),
+  authenticateUploadValidator,
+  setupUploadImage,
+  wrapRequestHandler(registerUserController)
+)
+
+export default router

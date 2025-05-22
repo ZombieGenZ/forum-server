@@ -18,6 +18,7 @@ declare module 'express' {
     decoded_email_verify_token?: TokenPayload
     decoded_forgot_password_token?: TokenPayload
     refresh_token?: RefreshToken
+    image?: ImageType
     // category?: Category
     // product?: Product
     // image?: ImageType

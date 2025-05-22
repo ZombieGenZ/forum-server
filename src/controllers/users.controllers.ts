@@ -173,228 +173,228 @@ export const verifyTokenUserController = async (
   }
 }
 
-export const getUserInfomationController = async (
-  req: Request<ParamsDictionary, any, AuthenticateRequestBody>,
-  res: Response
-) => {
-  const user = req.user as User
+// export const getUserInfomationController = async (
+//   req: Request<ParamsDictionary, any, AuthenticateRequestBody>,
+//   res: Response
+// ) => {
+//   const user = req.user as User
 
-  try {
-    res.json({
-      code: RESPONSE_CODE.GET_USER_INFOMATION_SUCCESSFUL,
-      message: MESSAGE.USER_MESSAGE.GET_USER_INFORMATION_SUCCESS,
-      infomation: omit(user, ['password', 'verify_token', 'forgot_password_token'])
-    })
-  } catch (err) {
-    res.json({
-      code: RESPONSE_CODE.GET_USER_INFOMATION_FAILED,
-      message: MESSAGE.USER_MESSAGE.GET_USER_INFORMATION_FAILURE
-    })
-  }
-}
+//   try {
+//     res.json({
+//       code: RESPONSE_CODE.GET_USER_INFOMATION_SUCCESSFUL,
+//       message: MESSAGE.USER_MESSAGE.GET_USER_INFORMATION_SUCCESS,
+//       infomation: omit(user, ['password', 'verify_token', 'forgot_password_token'])
+//     })
+//   } catch (err) {
+//     res.json({
+//       code: RESPONSE_CODE.GET_USER_INFOMATION_FAILED,
+//       message: MESSAGE.USER_MESSAGE.GET_USER_INFORMATION_FAILURE
+//     })
+//   }
+// }
 
-export const sendVerifyTokenController = async (
-  req: Request<ParamsDictionary, any, AuthenticateRequestBody>,
-  res: Response
-) => {
-  const user = req.user as User
+// export const sendVerifyTokenController = async (
+//   req: Request<ParamsDictionary, any, AuthenticateRequestBody>,
+//   res: Response
+// ) => {
+//   const user = req.user as User
 
-  try {
-    await userService.sendEmailVerify(user)
+//   try {
+//     await userService.sendEmailVerify(user)
 
-    res.json({
-      code: RESPONSE_CODE.SEND_EMAIL_VERIFY_SUCCESSFUL,
-      message: MESSAGE.USER_MESSAGE.SEND_EMAIL_VERIFY_SUCCESS
-    })
-  } catch (err) {
-    res.json({
-      code: RESPONSE_CODE.SEND_EMAIL_VERIFY_FAILED,
-      message: MESSAGE.USER_MESSAGE.SEND_EMAIL_VERIFY_FAILURE
-    })
-  }
-}
+//     res.json({
+//       code: RESPONSE_CODE.SEND_EMAIL_VERIFY_SUCCESSFUL,
+//       message: MESSAGE.USER_MESSAGE.SEND_EMAIL_VERIFY_SUCCESS
+//     })
+//   } catch (err) {
+//     res.json({
+//       code: RESPONSE_CODE.SEND_EMAIL_VERIFY_FAILED,
+//       message: MESSAGE.USER_MESSAGE.SEND_EMAIL_VERIFY_FAILURE
+//     })
+//   }
+// }
 
-export const verifyTokenController = async (
-  req: Request<ParamsDictionary, any, VerifyTokenRequestBody>,
-  res: Response
-) => {
-  try {
-    const result = await userService.verifyToken(req.body)
+// export const verifyTokenController = async (
+//   req: Request<ParamsDictionary, any, VerifyTokenRequestBody>,
+//   res: Response
+// ) => {
+//   try {
+//     const result = await userService.verifyToken(req.body)
 
-    res.json({
-      code: RESPONSE_CODE.VERIFY_EMAIL_VERIFY_TOKEN_SUCCESSFUL,
-      message: MESSAGE.USER_MESSAGE.VERIFY_EMAIL_VERIFY_TOKEN_SUCCESS,
-      result
-    })
-  } catch (err) {
-    res.json({
-      code: RESPONSE_CODE.VERIFY_EMAIL_VERIFY_TOKEN_FAILED,
-      message: MESSAGE.USER_MESSAGE.VERIFY_EMAIL_VERIFY_TOKEN_FAILURE
-    })
-  }
-}
+//     res.json({
+//       code: RESPONSE_CODE.VERIFY_EMAIL_VERIFY_TOKEN_SUCCESSFUL,
+//       message: MESSAGE.USER_MESSAGE.VERIFY_EMAIL_VERIFY_TOKEN_SUCCESS,
+//       result
+//     })
+//   } catch (err) {
+//     res.json({
+//       code: RESPONSE_CODE.VERIFY_EMAIL_VERIFY_TOKEN_FAILED,
+//       message: MESSAGE.USER_MESSAGE.VERIFY_EMAIL_VERIFY_TOKEN_FAILURE
+//     })
+//   }
+// }
 
-export const verifyAccountController = async (
-  req: Request<ParamsDictionary, any, VerifyAccountRequestBody>,
-  res: Response
-) => {
-  const user = req.user as User
+// export const verifyAccountController = async (
+//   req: Request<ParamsDictionary, any, VerifyAccountRequestBody>,
+//   res: Response
+// ) => {
+//   const user = req.user as User
 
-  try {
-    await userService.verifyAccount(user)
+//   try {
+//     await userService.verifyAccount(user)
 
-    res.json({
-      code: RESPONSE_CODE.VERIFY_ACCOUNT_SUCCESSFUL,
-      message: MESSAGE.USER_MESSAGE.VERIFY_ACCOUNT_SUCCESS
-    })
-  } catch (err) {
-    res.json({
-      code: RESPONSE_CODE.VERIFY_ACCOUNT_FAILED,
-      message: MESSAGE.USER_MESSAGE.VERIFY_ACCOUNT_FAILURE
-    })
-  }
-}
+//     res.json({
+//       code: RESPONSE_CODE.VERIFY_ACCOUNT_SUCCESSFUL,
+//       message: MESSAGE.USER_MESSAGE.VERIFY_ACCOUNT_SUCCESS
+//     })
+//   } catch (err) {
+//     res.json({
+//       code: RESPONSE_CODE.VERIFY_ACCOUNT_FAILED,
+//       message: MESSAGE.USER_MESSAGE.VERIFY_ACCOUNT_FAILURE
+//     })
+//   }
+// }
 
-export const sendEmailForgotPasswordController = async (
-  req: Request<ParamsDictionary, any, SendForgotPasswordRequestBody>,
-  res: Response
-) => {
-  const user = req.user as User
+// export const sendEmailForgotPasswordController = async (
+//   req: Request<ParamsDictionary, any, SendForgotPasswordRequestBody>,
+//   res: Response
+// ) => {
+//   const user = req.user as User
 
-  try {
-    await userService.sendForgotPassword(user)
+//   try {
+//     await userService.sendForgotPassword(user)
 
-    res.json({
-      code: RESPONSE_CODE.SEND_MAIL_FORGOT_PASSWORD_SUCCESSFUL,
-      message: MESSAGE.USER_MESSAGE.SEND_MAIL_FORGOT_PASSWORD_SUCCESS
-    })
-  } catch (err) {
-    res.json({
-      code: RESPONSE_CODE.SEND_MAIL_FORGOT_PASSWORD_FAILED,
-      message: MESSAGE.USER_MESSAGE.SEND_MAIL_FORGOT_PASSWORD_FAILURE
-    })
-  }
-}
+//     res.json({
+//       code: RESPONSE_CODE.SEND_MAIL_FORGOT_PASSWORD_SUCCESSFUL,
+//       message: MESSAGE.USER_MESSAGE.SEND_MAIL_FORGOT_PASSWORD_SUCCESS
+//     })
+//   } catch (err) {
+//     res.json({
+//       code: RESPONSE_CODE.SEND_MAIL_FORGOT_PASSWORD_FAILED,
+//       message: MESSAGE.USER_MESSAGE.SEND_MAIL_FORGOT_PASSWORD_FAILURE
+//     })
+//   }
+// }
 
-export const verifyForgotPasswordTokenController = async (
-  req: Request<ParamsDictionary, any, VerifyForgotPasswordTokenRequestBody>,
-  res: Response
-) => {
-  try {
-    const result = await userService.verifyForgotPasswordToken(req.body)
+// export const verifyForgotPasswordTokenController = async (
+//   req: Request<ParamsDictionary, any, VerifyForgotPasswordTokenRequestBody>,
+//   res: Response
+// ) => {
+//   try {
+//     const result = await userService.verifyForgotPasswordToken(req.body)
 
-    res.json({
-      code: RESPONSE_CODE.VERIFY_FORGOT_PASSWORD_TOKEN_SUCCESSFUL,
-      message: MESSAGE.USER_MESSAGE.VERIFY_FORGOT_PASSWORD_TOKEN_SUCCESS,
-      result
-    })
-  } catch (err) {
-    res.json({
-      code: RESPONSE_CODE.VERIFY_FORGOT_PASSWORD_TOKEN_FAILED,
-      message: MESSAGE.USER_MESSAGE.VERIFY_FORGOT_PASSWORD_TOKEN_FAILURE
-    })
-  }
-}
+//     res.json({
+//       code: RESPONSE_CODE.VERIFY_FORGOT_PASSWORD_TOKEN_SUCCESSFUL,
+//       message: MESSAGE.USER_MESSAGE.VERIFY_FORGOT_PASSWORD_TOKEN_SUCCESS,
+//       result
+//     })
+//   } catch (err) {
+//     res.json({
+//       code: RESPONSE_CODE.VERIFY_FORGOT_PASSWORD_TOKEN_FAILED,
+//       message: MESSAGE.USER_MESSAGE.VERIFY_FORGOT_PASSWORD_TOKEN_FAILURE
+//     })
+//   }
+// }
 
-export const forgotPasswordController = async (
-  req: Request<ParamsDictionary, any, ForgotPasswordRequestBody>,
-  res: Response
-) => {
-  const ip = (req.headers['cf-connecting-ip'] || req.ip) as string
-  const user = req.user as User
+// export const forgotPasswordController = async (
+//   req: Request<ParamsDictionary, any, ForgotPasswordRequestBody>,
+//   res: Response
+// ) => {
+//   const ip = (req.headers['cf-connecting-ip'] || req.ip) as string
+//   const user = req.user as User
 
-  try {
-    const ipData = (await axios.get(`https://ipinfo.io/${ip}/?token=${process.env.IPINFO_TOKEN}`)).data
-    const [latitude, longitude] = ipData.loc.split(',')
-    const locationData = await axios.get(
-      `https://nominatim.openstreetmap.org/reverse?format=json&lat=${latitude}&lon=${longitude}`
-    )
-    const userAgent = req.useragent
-    const deviceInfo = {
-      isMobile: userAgent?.isMobile,
-      browser: userAgent?.browser,
-      os: userAgent?.os
-    }
+//   try {
+//     const ipData = (await axios.get(`https://ipinfo.io/${ip}/?token=${process.env.IPINFO_TOKEN}`)).data
+//     const [latitude, longitude] = ipData.loc.split(',')
+//     const locationData = await axios.get(
+//       `https://nominatim.openstreetmap.org/reverse?format=json&lat=${latitude}&lon=${longitude}`
+//     )
+//     const userAgent = req.useragent
+//     const deviceInfo = {
+//       isMobile: userAgent?.isMobile,
+//       browser: userAgent?.browser,
+//       os: userAgent?.os
+//     }
 
-    await userService.forgotPassword(
-      user,
-      req.body,
-      locationData.data.display_name,
-      ip,
-      deviceInfo.browser as string,
-      deviceInfo.os as string
-    )
+//     await userService.forgotPassword(
+//       user,
+//       req.body,
+//       locationData.data.display_name,
+//       ip,
+//       deviceInfo.browser as string,
+//       deviceInfo.os as string
+//     )
 
-    res.json({
-      code: RESPONSE_CODE.FORGOT_PASSWORD_SUCCESSFUL,
-      message: MESSAGE.USER_MESSAGE.CHANGE_PASSWORD_SUCCESS
-    })
-  } catch (err) {
-    res.json({
-      code: RESPONSE_CODE.FORGOT_PASSWORD_FAILED,
-      message: MESSAGE.USER_MESSAGE.CHANGE_PASSWORD_FAILURE
-    })
-  }
-}
+//     res.json({
+//       code: RESPONSE_CODE.FORGOT_PASSWORD_SUCCESSFUL,
+//       message: MESSAGE.USER_MESSAGE.CHANGE_PASSWORD_SUCCESS
+//     })
+//   } catch (err) {
+//     res.json({
+//       code: RESPONSE_CODE.FORGOT_PASSWORD_FAILED,
+//       message: MESSAGE.USER_MESSAGE.CHANGE_PASSWORD_FAILURE
+//     })
+//   }
+// }
 
-export const changeInformationController = async (
-  req: Request<ParamsDictionary, any, ChangeInfomationRequestBody>,
-  res: Response
-) => {
-  const user = req.user as User
+// export const changeInformationController = async (
+//   req: Request<ParamsDictionary, any, ChangeInfomationRequestBody>,
+//   res: Response
+// ) => {
+//   const user = req.user as User
 
-  try {
-    await userService.changeInfomation(req.body, user)
+//   try {
+//     await userService.changeInfomation(req.body, user)
 
-    res.json({
-      code: RESPONSE_CODE.CHANGE_INFORMATION_SUCCESSFUL,
-      message: MESSAGE.USER_MESSAGE.CHANGE_INFORMATION_SUCCESS
-    })
-  } catch (err) {
-    res.json({
-      code: RESPONSE_CODE.CHANGE_INFORMATION_FAILED,
-      message: MESSAGE.USER_MESSAGE.CHANGE_INFORMATION_FAILURE
-    })
-  }
-}
+//     res.json({
+//       code: RESPONSE_CODE.CHANGE_INFORMATION_SUCCESSFUL,
+//       message: MESSAGE.USER_MESSAGE.CHANGE_INFORMATION_SUCCESS
+//     })
+//   } catch (err) {
+//     res.json({
+//       code: RESPONSE_CODE.CHANGE_INFORMATION_FAILED,
+//       message: MESSAGE.USER_MESSAGE.CHANGE_INFORMATION_FAILURE
+//     })
+//   }
+// }
 
-export const changePasswordController = async (
-  req: Request<ParamsDictionary, any, ChangePasswordRequestBody>,
-  res: Response
-) => {
-  const ip = (req.headers['cf-connecting-ip'] || req.ip) as string
-  const user = req.user as User
+// export const changePasswordController = async (
+//   req: Request<ParamsDictionary, any, ChangePasswordRequestBody>,
+//   res: Response
+// ) => {
+//   const ip = (req.headers['cf-connecting-ip'] || req.ip) as string
+//   const user = req.user as User
 
-  try {
-    const ipData = (await axios.get(`https://ipinfo.io/${ip}/?token=${process.env.IPINFO_TOKEN}`)).data
-    const [latitude, longitude] = ipData.loc.split(',')
-    const locationData = await axios.get(
-      `https://nominatim.openstreetmap.org/reverse?format=json&lat=${latitude}&lon=${longitude}`
-    )
-    const userAgent = req.useragent
-    const deviceInfo = {
-      isMobile: userAgent?.isMobile,
-      browser: userAgent?.browser,
-      os: userAgent?.os
-    }
+//   try {
+//     const ipData = (await axios.get(`https://ipinfo.io/${ip}/?token=${process.env.IPINFO_TOKEN}`)).data
+//     const [latitude, longitude] = ipData.loc.split(',')
+//     const locationData = await axios.get(
+//       `https://nominatim.openstreetmap.org/reverse?format=json&lat=${latitude}&lon=${longitude}`
+//     )
+//     const userAgent = req.useragent
+//     const deviceInfo = {
+//       isMobile: userAgent?.isMobile,
+//       browser: userAgent?.browser,
+//       os: userAgent?.os
+//     }
 
-    await userService.changePassword(
-      req.body,
-      user,
-      locationData.data.display_name,
-      ip,
-      deviceInfo.browser as string,
-      deviceInfo.os as string
-    )
+//     await userService.changePassword(
+//       req.body,
+//       user,
+//       locationData.data.display_name,
+//       ip,
+//       deviceInfo.browser as string,
+//       deviceInfo.os as string
+//     )
 
-    res.json({
-      code: RESPONSE_CODE.CHANGE_PASSWORD_SUCCESSFUL,
-      message: MESSAGE.USER_MESSAGE.CHANGE_PASSWORD_SUCCESS
-    })
-  } catch (err) {
-    res.json({
-      code: RESPONSE_CODE.CHANGE_PASSWORD_FAILED,
-      message: MESSAGE.USER_MESSAGE.CHANGE_PASSWORD_FAILURE
-    })
-  }
-}
+//     res.json({
+//       code: RESPONSE_CODE.CHANGE_PASSWORD_SUCCESSFUL,
+//       message: MESSAGE.USER_MESSAGE.CHANGE_PASSWORD_SUCCESS
+//     })
+//   } catch (err) {
+//     res.json({
+//       code: RESPONSE_CODE.CHANGE_PASSWORD_FAILED,
+//       message: MESSAGE.USER_MESSAGE.CHANGE_PASSWORD_FAILURE
+//     })
+//   }
+// }

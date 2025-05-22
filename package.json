@@ -1,5 +1,5 @@
 {
-  "name": "tank-food-server",
+  "name": "forum",
   "private": true,
   "version": "0.8.2",
   "main": "index.js",
@@ -13,8 +13,8 @@
     "prettier": "prettier --check .",
     "prettier:fix": "prettier --write ."
   },
-  "author": "TANK Groups",
-  "description": "Máy chủ của dự án TANK-Food",
+  "author": "Bùi Đăng Khoa",
+  "description": "Máy chủ của dự án Forum",
   "devDependencies": {
     "@eslint/js": "^9.18.0",
     "@types/archiver": "^6.0.3",
@@ -70,7 +70,6 @@
     "qrcode": "^1.5.4",
     "sharp": "^0.33.5",
     "socket.io": "^4.8.1",
-    "socket.io-client": "^4.8.1",
-    "tank-food-server": "file:"
+    "socket.io-client": "^4.8.1"
   }
 }
