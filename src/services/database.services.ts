@@ -2,6 +2,7 @@ import { Db, MongoClient, Collection, IndexSpecification, CreateIndexesOptions }
 import dotenv from 'dotenv'
 import User from '~/models/schemas/users.shemas'
 import RefreshToken from '~/models/schemas/refreshtoken.schemas'
+import Image from '~/models/schemas/images.shemas'
 
 dotenv.config()
 
@@ -33,6 +34,9 @@ class DatabaseService {
   }
   get refreshToken(): Collection<RefreshToken> {
     return this.db.collection(process.env.DATABASE_REFRESH_TOKEN_COLLECTION as string)
+  }
+  get images(): Collection<Image> {
+    return this.db.collection(process.env.DATABASE_IMAGE_COLLECTION as string)
   }
 }
 

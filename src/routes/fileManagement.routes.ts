@@ -1,5 +1,5 @@
 import express from 'express'
-import { registerUserController } from '~/controllers/users.controllers'
+import { uploadImageController } from '~/controllers/fileManagement.controllers'
 import { authenticateUploadValidator } from '~/middlewares/authenticate.middlewares copy'
 import { setupUploadImage } from '~/middlewares/fileManagement.middlewares'
 import { wrapRequestHandler } from '~/utils/handlers.utils'
@@ -23,7 +23,7 @@ router.post(
   upload.single('image'),
   authenticateUploadValidator,
   setupUploadImage,
-  wrapRequestHandler(registerUserController)
+  wrapRequestHandler(uploadImageController)
 )
 
 export default router

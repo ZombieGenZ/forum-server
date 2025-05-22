@@ -6,6 +6,8 @@ interface ImageType {
   path: string
   url: string
   size: number
+  user: ObjectId
+  createdAt?: Date
 }
 
 export default class Image {
@@ -14,6 +16,8 @@ export default class Image {
   path: string
   url: string
   size: number
+  user: ObjectId
+  createdAt: Date
 
   constructor(image: ImageType) {
     this._id = image._id || new ObjectId()
@@ -21,5 +25,7 @@ export default class Image {
     this.path = image.path
     this.url = image.url
     this.size = image.size
+    this.user = image.user
+    this.createdAt = image.createdAt || new Date()
   }
 }
