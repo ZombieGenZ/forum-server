@@ -2,7 +2,6 @@ import { Request, Response, NextFunction } from 'express'
 import { checkSchema, validationResult } from 'express-validator'
 import { ParamsDictionary } from 'express-serve-static-core'
 import databaseService from '~/services/database.services'
-import { LoginUserRequestBody, RegisterUserRequestBody } from '~/models/requests/users.requests'
 import { MESSAGE } from '~/constants/message.constants'
 import userService from '~/services/users.services'
 import HTTPSTATUS from '~/constants/httpStatus.constants'
@@ -16,11 +15,7 @@ import { UserTypeEnum } from '~/constants/users.constants'
 import { ObjectId } from 'mongodb'
 import { TokenType } from '~/constants/jwt.constants'
 
-export const registerUserValidator = async (
-  req: Request<ParamsDictionary, any, RegisterUserRequestBody>,
-  res: Response,
-  next: NextFunction
-) => {
+export const registerUserValidator = async (req: Request, res: Response, next: NextFunction) => {
   checkSchema(
     {
       display_name: {
@@ -203,11 +198,7 @@ export const registerUserValidator = async (
     })
 }
 
-export const loginUserValidator = async (
-  req: Request<ParamsDictionary, any, LoginUserRequestBody>,
-  res: Response,
-  next: NextFunction
-) => {
+export const loginUserValidator = async (req: Request, res: Response, next: NextFunction) => {
   checkSchema(
     {
       email_or_phone_or_username: {

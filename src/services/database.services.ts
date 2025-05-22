@@ -3,6 +3,7 @@ import dotenv from 'dotenv'
 import User from '~/models/schemas/users.shemas'
 import RefreshToken from '~/models/schemas/refreshtoken.schemas'
 import Image from '~/models/schemas/images.shemas'
+import Post from '~/models/schemas/posts.shemas'
 
 dotenv.config()
 
@@ -37,6 +38,9 @@ class DatabaseService {
   }
   get images(): Collection<Image> {
     return this.db.collection(process.env.DATABASE_IMAGE_COLLECTION as string)
+  }
+  get posts(): Collection<Post> {
+    return this.db.collection(process.env.DATABASE_POST_COLLECTION as string)
   }
 }
 

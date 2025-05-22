@@ -90,4 +90,24 @@ export class MESSAGE {
     UPLOAD_IMAGE_SUCCESS: 'Tải lên hình ảnh thành công',
     UPLOAD_IMAGE_FAILURE: 'Tải lên hình ảnh thất bại'
   } as const
+
+  static POST_MESSAGE = {
+    POST_ID_IS_REQUIRED: 'Không được bỏ trống ID bài viết',
+    POST_ID_MUST_BE_A_STRING: 'ID bài viết phải là một chuỗi ký tự',
+    POST_ID_MUST_BE_A_ID: 'ID bài viết phải là một ID hợp lệ',
+    POST_ID_NOT_FOUND: 'ID bài viết không tồn tại',
+    TITLE_IS_REQUIRED: 'Không được bỏ trống tiêu đề',
+    TITLE_MUST_BE_A_STRING: 'Tiêu đề phải là một chuỗi ký tự',
+    TITLE_LENGTH_MUST_BE_FROM_1_TO_150: 'Tiêu đề phải có độ dài từ 1 đến 150 ký tự',
+    CONTENT_IS_REQUIRED: 'Không được bỏ trống nội dung',
+    CONTENT_MUST_BE_A_STRING: 'Nội dung phải là một chuỗi ký tự',
+    CAN_COMMENT_IS_REQUIRED: 'Không được bỏ trống có thể bình luận',
+    CAN_COMMENT_MUST_BE_A_BOOLEAN: 'Có thể bình luận phải là một giá trị boolean',
+    CREATE_POST_SUCCESS: 'Tạo bài viết thành công',
+    CREATE_POST_FAILURE: 'Tạo bài viết thất bại',
+    UPDATE_POST_SUCCESS: 'Cập nhật bài viết thành công',
+    UPDATE_POST_FAILURE: 'Cập nhật bài viết thất bại',
+    DELETE_POST_SUCCESS: 'Xóa bài viết thành công',
+    DELETE_POST_FAILURE: 'Xóa bài viết thất bại'
+  }
 }

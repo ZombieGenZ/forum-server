@@ -1,6 +1,6 @@
 import express from 'express'
 import { uploadImageController } from '~/controllers/fileManagement.controllers'
-import { authenticateUploadValidator } from '~/middlewares/authenticate.middlewares copy'
+import { authenticateUploadValidator } from '~/middlewares/authenticate.middlewares'
 import { setupUploadImage } from '~/middlewares/fileManagement.middlewares'
 import { wrapRequestHandler } from '~/utils/handlers.utils'
 import { upload } from '~/utils/image.utils'

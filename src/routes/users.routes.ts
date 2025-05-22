@@ -14,11 +14,11 @@ import {
   // verifyTokenController,
   verifyTokenUserController
 } from '~/controllers/users.controllers'
-import { authenticateValidator } from '~/middlewares/authenticate.middlewares copy'
+import { authenticateValidator } from '~/middlewares/authenticate.middlewares'
 import {
   registerUserValidator,
   loginUserValidator,
-  verifyTokenValidator,
+  verifyTokenValidator
   // sendVerifyTokenValidator,
   // verifyAccountValidator,
   // sendEmailForgotPasswordValidator,
