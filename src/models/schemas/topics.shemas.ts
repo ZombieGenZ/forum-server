@@ -6,6 +6,7 @@ interface TopicType {
   topic: string
   text_color: ColorTypeFull
   background_color: ColorTypeFull
+  total_posts?: number
   created_at?: Date
   created_by: ObjectId
   updated_at?: Date
@@ -17,6 +18,7 @@ export default class Topic {
   topic: string
   text_color: ColorTypeFull
   background_color: ColorTypeFull
+  total_posts: number
   created_at: Date
   created_by: ObjectId
   updated_at: Date
@@ -29,6 +31,7 @@ export default class Topic {
     this.topic = topic.topic
     this.background_color = topic.background_color
     this.text_color = topic.text_color
+    this.total_posts = topic.total_posts || 0
     this.created_at = topic.created_at || date
     this.created_by = topic.created_by
     this.updated_at = topic.updated_at || date

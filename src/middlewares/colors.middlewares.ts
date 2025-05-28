@@ -8,7 +8,13 @@ import { isValidHexColor } from '~/utils/color.utils'
 export const colorValidator = (req: Request, res: Response, next: NextFunction) => {
   const body = req.body
 
-  if (!body.colorType) {
+  if (
+    body.colorType === undefined ||
+    body.colorType === null ||
+    typeof body.colorType !== 'number' ||
+    body.colorType < 0 ||
+    body.colorType > 3
+  ) {
     res.status(HTTPSTATUS.UNPROCESSABLE_ENTITY).json({
       code: RESPONSE_CODE.COLOR_INVALID,
       message: MESSAGE.COLOR_MESSAGE.COLOR_TYPE_IS_REQUIRED
@@ -18,11 +24,11 @@ export const colorValidator = (req: Request, res: Response, next: NextFunction) 
 
   if (
     body.colorType === ColorType.COLOR_BASIC &&
-    (!body.basicColor || typeof body.basicColor !== 'string' || isValidHexColor(body.basicColor))
+    (!body.basicColor || typeof body.basicColor !== 'string' || !isValidHexColor(body.basicColor))
   ) {
     res.status(HTTPSTATUS.UNPROCESSABLE_ENTITY).json({
       code: RESPONSE_CODE.COLOR_INVALID,
-      message: MESSAGE.COLOR_MESSAGE.BASIC_COLOR_IS_REQUIRED
+      message: MESSAGE.COLOR_MESSAGE.COLOR_INVALID
     })
     return
   }
@@ -38,7 +44,7 @@ export const colorValidator = (req: Request, res: Response, next: NextFunction) 
   ) {
     res.status(HTTPSTATUS.UNPROCESSABLE_ENTITY).json({
       code: RESPONSE_CODE.COLOR_INVALID,
-      message: MESSAGE.COLOR_MESSAGE.GRADIENT_2_COLOR_IS_REQUIRED
+      message: MESSAGE.COLOR_MESSAGE.COLOR_INVALID
     })
     return
   }
@@ -57,7 +63,7 @@ export const colorValidator = (req: Request, res: Response, next: NextFunction) 
   ) {
     res.status(HTTPSTATUS.UNPROCESSABLE_ENTITY).json({
       code: RESPONSE_CODE.COLOR_INVALID,
-      message: MESSAGE.COLOR_MESSAGE.GRADIENT_3_COLOR_IS_REQUIRED
+      message: MESSAGE.COLOR_MESSAGE.COLOR_INVALID
     })
     return
   }
@@ -68,7 +74,13 @@ export const colorValidator = (req: Request, res: Response, next: NextFunction) 
 export const colorTextValidator = (req: Request, res: Response, next: NextFunction) => {
   const body = req.body
 
-  if (!body.textColorType) {
+  if (
+    body.textColorType === undefined ||
+    body.textColorType === null ||
+    typeof body.textColorType !== 'number' ||
+    body.textColorType < 0 ||
+    body.colorType > 3
+  ) {
     res.status(HTTPSTATUS.UNPROCESSABLE_ENTITY).json({
       code: RESPONSE_CODE.COLOR_INVALID,
       message: MESSAGE.COLOR_MESSAGE.COLOR_TYPE_IS_REQUIRED
@@ -78,11 +90,11 @@ export const colorTextValidator = (req: Request, res: Response, next: NextFuncti
 
   if (
     body.textColorType === ColorType.COLOR_BASIC &&
-    (!body.textBasicColor || typeof body.textBasicColor !== 'string' || isValidHexColor(body.textBasicColor))
+    (!body.textBasicColor || typeof body.textBasicColor !== 'string' || !isValidHexColor(body.textBasicColor))
   ) {
     res.status(HTTPSTATUS.UNPROCESSABLE_ENTITY).json({
       code: RESPONSE_CODE.COLOR_INVALID,
-      message: MESSAGE.COLOR_MESSAGE.BASIC_COLOR_IS_REQUIRED
+      message: MESSAGE.COLOR_MESSAGE.COLOR_INVALID
     })
     return
   }
@@ -98,7 +110,7 @@ export const colorTextValidator = (req: Request, res: Response, next: NextFuncti
   ) {
     res.status(HTTPSTATUS.UNPROCESSABLE_ENTITY).json({
       code: RESPONSE_CODE.COLOR_INVALID,
-      message: MESSAGE.COLOR_MESSAGE.GRADIENT_2_COLOR_IS_REQUIRED
+      message: MESSAGE.COLOR_MESSAGE.COLOR_INVALID
     })
     return
   }
@@ -117,7 +129,7 @@ export const colorTextValidator = (req: Request, res: Response, next: NextFuncti
   ) {
     res.status(HTTPSTATUS.UNPROCESSABLE_ENTITY).json({
       code: RESPONSE_CODE.COLOR_INVALID,
-      message: MESSAGE.COLOR_MESSAGE.GRADIENT_3_COLOR_IS_REQUIRED
+      message: MESSAGE.COLOR_MESSAGE.COLOR_INVALID
     })
     return
   }

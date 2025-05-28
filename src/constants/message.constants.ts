@@ -88,17 +88,25 @@ export class MESSAGE {
 
   static COLOR_MESSAGE = {
     COLOR_TYPE_IS_REQUIRED: 'Không được bỏ trống loại màu',
-    BASIC_COLOR_IS_REQUIRED: 'Không được bỏ trống màu cơ bản',
-    GRADIENT_2_COLOR_IS_REQUIRED: 'Không được bỏ trống màu gradient 2',
-    GRADIENT_3_COLOR_IS_REQUIRED: 'Không được bỏ trống màu gradient 3'
+    COLOR_INVALID: 'Loại màu không hợp lệ'
   } as const
 
   static TOPIC_MESSAGE = {
+    TOPIC_ID_MUST_NOT_BE_EMPTY: 'Không được bỏ trống ID chủ đề',
+    TOPIC_ID_MUST_BE_A_STRING: 'ID chủ đề phải là một chuỗi ký tự',
+    TOPIC_ID_MUST_BE_A_VALID_MONGO_ID: 'ID chủ đề phải là một ID Mongo hợp lệ',
+    TOPIC_ID_NOT_FOUND: 'ID chủ đề không tồn tại',
     TOPIC_MUST_NOT_BE_EMPTY: 'Chủ đề không được để trống',
     TOPIC_MUST_BE_A_STRING: 'Chủ đề phải là một chuỗi ký tự',
     TOPIC_LENGTH_MUST_BE_FROM_1_TO_30: 'Chủ đề phải có độ dài từ 1 đến 30 ký tự',
     CREATE_TOPIC_SUCCESS: 'Tạo chủ đề thành công',
     CREATE_TOPIC_FAILURE: 'Tạo chủ đề thất bại',
+    UPDATE_TOPIC_SUCCESS: 'Cập nhật chủ đề thành công',
+    UPDATE_TOPIC_FAILURE: 'Cập nhật chủ đề thất bại',
+    DELETE_TOPIC_SUCCESS: 'Xóa chủ đề thành công',
+    DELETE_TOPIC_FAILURE: 'Xóa chủ đề thất bại',
+    GET_TOPIC_SUCCESS: 'Lấy thông tin chủ đề thành công',
+    GET_TOPIC_FAILURE: 'Lấy thông tin chủ đề thất bại'
   } as const
 
   static POST_MESSAGE = {

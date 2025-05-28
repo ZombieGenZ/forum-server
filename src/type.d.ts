@@ -8,6 +8,7 @@ import { ImageType } from './constants/images.constants'
 import Product from './models/schemas/product.schemas'
 import Order from './models/schemas/orders.schemas'
 import { ProductList } from './constants/orders.constants'
+import Topic from './models/schemas/topics.shemas';
 
 declare module 'express' {
   interface Request {
@@ -19,6 +20,7 @@ declare module 'express' {
     decoded_forgot_password_token?: TokenPayload
     refresh_token?: RefreshToken
     image?: ImageType
+    topic?: Topic
     // category?: Category
     // product?: Product
     // image?: ImageType
