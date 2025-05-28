@@ -18,22 +18,6 @@ import { TokenType } from '~/constants/jwt.constants'
 export const registerUserValidator = async (req: Request, res: Response, next: NextFunction) => {
   checkSchema(
     {
-      display_name: {
-        notEmpty: {
-          errorMessage: MESSAGE.USER_MESSAGE.DISPLAY_NAME_IS_REQUIRED
-        },
-        trim: true,
-        isString: {
-          errorMessage: MESSAGE.USER_MESSAGE.DISPLAY_NAME_MUST_BE_A_STRING
-        },
-        isLength: {
-          options: {
-            min: 5,
-            max: 100
-          },
-          errorMessage: MESSAGE.USER_MESSAGE.DISPLAY_NAME_LENGTH_MUST_BE_FROM_1_TO_50
-        }
-      },
       username: {
         notEmpty: {
           errorMessage: MESSAGE.USER_MESSAGE.USERNAME_IS_REQUIRED
@@ -201,49 +185,31 @@ export const registerUserValidator = async (req: Request, res: Response, next: N
 export const loginUserValidator = async (req: Request, res: Response, next: NextFunction) => {
   checkSchema(
     {
-      email_or_phone_or_username: {
+      email: {
         notEmpty: {
-          errorMessage: MESSAGE.USER_MESSAGE.EMAIL_OR_PHONE_OR_USERNAME_IS_REQUIRED
+          errorMessage: MESSAGE.USER_MESSAGE.EMAIL_IS_REQUIRED
         },
         trim: true,
         isString: {
-          errorMessage: MESSAGE.USER_MESSAGE.EMAIL_OR_PHONE_OR_USERNAME_MUST_BE_A_STRING
+          errorMessage: MESSAGE.USER_MESSAGE.EMAIL_MUST_BE_A_STRING
         },
         isEmail: {
-          errorMessage: MESSAGE.USER_MESSAGE.EMAIL_OR_PHONE_OR_USERNAME_IS_NOT_VALID
+          errorMessage: MESSAGE.USER_MESSAGE.EMAIL_IS_NOT_VALID
         },
         custom: {
           options: async (value, { req }) => {
+            // const result = await databaseService.users.findOne({
+            //   $or: [{ email: value }, { phone: value }, { username: value }],
+            //   password: HashPassword(req.body.password)
+            // })
             const result = await databaseService.users.findOne({
-              $or: [{ email: value }, { phone: value }, { username: value }],
+              email: value,
               password: HashPassword(req.body.password)
             })
 
             if (!result) {
-              throw new Error(MESSAGE.USER_MESSAGE.EMAIL_OR_PHONE_OR_USERNAME_OR_PASSWORD_IS_NOT_VALID)
+              throw new Error(MESSAGE.USER_MESSAGE.ACCOUNT_IS_NOT_VALID)
             }
-
-            // if (result.penalty !== null) {
-            //   const date = new Date()
-
-            //   if (result.penalty.expired_at < date) {
-            //     accountManagementService.unBan(result._id.toString())
-            //   } else {
-            //     throw new Error(
-            //       serverLanguage == LANGUAGE.VIETNAMESE
-            //         ? VIETNAMESE_DYNAMIC_MESSAGE.BanAccount(
-            //             result.display_name,
-            //             result.penalty.reason,
-            //             result.penalty.expired_at
-            //           )
-            //         : ENGLIS_DYNAMIC_MESSAGE.BanAccount(
-            //             result.display_name,
-            //             result.penalty.reason,
-            //             result.penalty.expired_at
-            //           )
-            //     )
-            //   }
-            // }
 
             ;(req as Request).user = result
 

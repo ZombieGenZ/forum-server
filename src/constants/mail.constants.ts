@@ -68,7 +68,7 @@ export const MAIL = {
                   </a>
                   <p style="font-size: 14px; color: #666666; line-height: 1.6; margin: 20px 0 0;">
                     Nếu nút trên không hoạt động, bạn có thể sao chép và dán liên kết sau vào trình duyệt của mình: <br>
-                    <a href="${process.env.url}" style="color: #3498db; text-decoration: none;">${process.env.url}</a>
+                    <a href="${url}" style="color: #3498db; text-decoration: none;">${url}</a>
                   </p>
                 </td>
               </tr>

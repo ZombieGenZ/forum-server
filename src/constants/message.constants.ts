@@ -29,12 +29,7 @@ export class MESSAGE {
     EMAIL_LENGTH_MUST_BE_FROM_5_TO_100: 'Địa chỉ email phải có độ dài từ 5 đến 100 ký tự',
     EMAIL_IS_NOT_VALID: 'Địa chỉ email không đúng định dạng',
     EMAIL_ALREADY_EXISTS: 'Địa chỉ email đã được sử dụng',
-    EMAIL_OR_PHONE_OR_USERNAME_IS_REQUIRED: 'Không được bỏ trống địa chỉ email, số điện thoại hoặc tên tài khoản',
-    EMAIL_OR_PHONE_OR_USERNAME_MUST_BE_A_STRING:
-      'Địa chỉ email, số điện thoại hoặc tên tài khoản phải là một chuỗi ký tự',
-    EMAIL_OR_PHONE_OR_USERNAME_IS_NOT_VALID: 'Địa chỉ email, số điện thoại hoặc tên tài khoản không hợp lệ',
-    EMAIL_OR_PHONE_OR_USERNAME_OR_PASSWORD_IS_NOT_VALID:
-      'Địa chỉ email, số điện thoại, tên tài khoản hoặc mật khẩu không hợp lệ',
+    ACCOUNT_IS_NOT_VALID: 'Địa chỉ email hoặc mật khẩu không hợp lệ',
     EMAIL_NOT_FOUND: 'Email không tồn tại',
     PHONE_IS_REQUIRED: 'Không được bỏ trống số điện thoại',
     PHONE_MUST_BE_A_STRING: 'Số điện thoại phải là một chuỗi ký tự',
@@ -89,6 +84,21 @@ export class MESSAGE {
     IMAGE_IS_REQUIRED: 'Không được bỏ trống hình ảnh',
     UPLOAD_IMAGE_SUCCESS: 'Tải lên hình ảnh thành công',
     UPLOAD_IMAGE_FAILURE: 'Tải lên hình ảnh thất bại'
+  } as const
+
+  static COLOR_MESSAGE = {
+    COLOR_TYPE_IS_REQUIRED: 'Không được bỏ trống loại màu',
+    BASIC_COLOR_IS_REQUIRED: 'Không được bỏ trống màu cơ bản',
+    GRADIENT_2_COLOR_IS_REQUIRED: 'Không được bỏ trống màu gradient 2',
+    GRADIENT_3_COLOR_IS_REQUIRED: 'Không được bỏ trống màu gradient 3'
+  } as const
+
+  static TOPIC_MESSAGE = {
+    TOPIC_MUST_NOT_BE_EMPTY: 'Chủ đề không được để trống',
+    TOPIC_MUST_BE_A_STRING: 'Chủ đề phải là một chuỗi ký tự',
+    TOPIC_LENGTH_MUST_BE_FROM_1_TO_30: 'Chủ đề phải có độ dài từ 1 đến 30 ký tự',
+    CREATE_TOPIC_SUCCESS: 'Tạo chủ đề thành công',
+    CREATE_TOPIC_FAILURE: 'Tạo chủ đề thất bại',
   } as const
 
   static POST_MESSAGE = {

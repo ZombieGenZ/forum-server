@@ -173,25 +173,25 @@ export const verifyTokenUserController = async (
   }
 }
 
-// export const getUserInfomationController = async (
-//   req: Request<ParamsDictionary, any, AuthenticateRequestBody>,
-//   res: Response
-// ) => {
-//   const user = req.user as User
-
-//   try {
-//     res.json({
-//       code: RESPONSE_CODE.GET_USER_INFOMATION_SUCCESSFUL,
-//       message: MESSAGE.USER_MESSAGE.GET_USER_INFORMATION_SUCCESS,
-//       infomation: omit(user, ['password', 'verify_token', 'forgot_password_token'])
-//     })
-//   } catch (err) {
-//     res.json({
-//       code: RESPONSE_CODE.GET_USER_INFOMATION_FAILED,
-//       message: MESSAGE.USER_MESSAGE.GET_USER_INFORMATION_FAILURE
-//     })
-//   }
-// }
+export const getUserInfomationController = async (
+  req: Request<ParamsDictionary, any, AuthenticateRequestBody>,
+  res: Response
+) => {
+  const user = req.user as User
+  
+  try {
+    res.json({
+      code: RESPONSE_CODE.GET_USER_INFOMATION_SUCCESSFUL,
+      message: MESSAGE.USER_MESSAGE.GET_USER_INFORMATION_SUCCESS,
+      account: omit(user, ['password', 'verify_token', 'forgot_password_token'])
+    })
+  } catch (err) {
+    res.json({
+      code: RESPONSE_CODE.GET_USER_INFOMATION_FAILED,
+      message: MESSAGE.USER_MESSAGE.GET_USER_INFORMATION_FAILURE
+    })
+  }
+}
 
 // export const sendVerifyTokenController = async (
 //   req: Request<ParamsDictionary, any, AuthenticateRequestBody>,

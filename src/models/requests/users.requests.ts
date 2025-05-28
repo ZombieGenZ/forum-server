@@ -1,5 +1,4 @@
 export interface RegisterUserRequestBody {
-  display_name: string
   username: string
   email: string
   phone: string
@@ -8,7 +7,7 @@ export interface RegisterUserRequestBody {
 }
 
 export interface LoginUserRequestBody {
-  email_or_phone_or_username: string
+  email: string
   password: string
 }
 

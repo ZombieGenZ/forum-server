@@ -60,7 +60,7 @@ app.set('trust proxy', true)
 // import api router
 import api_users from '~/routes/users.routes'
 import api_file_management from '~/routes/fileManagement.routes'
-// import api_categories from '~/routes/categories.routes'
+import api_topics from '~/routes/topics.routes'
 // import api_products from '~/routes/products.routes'
 // import api_voucher_public from '~/routes/voucherPublic.routes'
 // import api_voucher_private from '~/routes/voucherPrivate.routes'
@@ -73,7 +73,7 @@ import api_file_management from '~/routes/fileManagement.routes'
 
 app.use('/api/users', api_users)
 app.use('/api/file-management', api_file_management)
-// app.use('/api/categories', api_categories)
+app.use('/api/topics', api_topics)
 // app.use('/api/products', api_products)
 // app.use('/api/voucher-public', api_voucher_public)
 // app.use('/api/voucher-private', api_voucher_private)

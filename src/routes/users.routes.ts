@@ -3,7 +3,7 @@ import {
   // changeInformationController,
   // changePasswordController,
   // forgotPasswordController,
-  // getUserInfomationController,
+  getUserInfomationController,
   loginUserController,
   logoutUserController,
   registerUserController,
@@ -35,7 +35,6 @@ const router = express.Router()
  * Path: /api/users/register
  * Method: POST
  * Body: {
- *    display_name: string,
  *    username: string,
  *    email: string,
  *    phone: string,
@@ -50,9 +49,8 @@ router.post('/register', registerUserValidator, wrapRequestHandler(registerUserC
  * Path: /api/users/login
  * Method: POST
  * Body: {
- *    email_or_phone_or_username: string,
+ *    email: string,
  *    password: string,
- *    'cf-turnstile-response': string
  * }
  */
 router.post('/login', loginUserValidator, wrapRequestHandler(loginUserController))
@@ -83,18 +81,18 @@ router.delete('/logout', authenticateValidator, wrapRequestHandler(logoutUserCon
  */
 router.post('/verify-token', verifyTokenValidator, wrapRequestHandler(verifyTokenUserController))
 
-// /*
-//  * Description: Lấy thông tin người dùng
-//  * Path: /api/users/get-user-infomation
-//  * Method: POST
-//  * headers: {
-//  *    authorization?: Bearer <token>
-//  * },
-//  * Body: {
-//  *    refresh_token: string
-//  * }
-//  */
-// router.post('/get-user-infomation', authenticateValidator, wrapRequestHandler(getUserInfomationController))
+/*
+ * Description: Lấy thông tin người dùng
+ * Path: /api/users/get-user-infomation
+ * Method: POST
+ * headers: {
+ *    authorization?: Bearer <token>
+ * },
+ * Body: {
+ *    refresh_token: string
+ * }
+ */
+router.post('/get-user-infomation', authenticateValidator, wrapRequestHandler(getUserInfomationController))
 
 // /*
 //  * Description: Gửi lại mã xác thực tài khoản

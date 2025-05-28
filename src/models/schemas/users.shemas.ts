@@ -1,27 +1,18 @@
 import { ObjectId } from 'mongodb'
-import { BadgeType } from '~/constants/badge.constants'
-import { ImageType } from '~/constants/images.constants'
 import { UserRoleEnum, UserTypeEnum } from '~/constants/users.constants'
 
 interface UserType {
   _id?: ObjectId
-  display_name: string
+  display_name?: string
   username: string
   email: string
   phone: string
   password: string
   user_type?: UserTypeEnum
   user_role?: UserRoleEnum
-  badge?: BadgeType[]
+  is_verified?: boolean
   verify_token?: string
   forget_password_token?: string
-  avatar?: ImageType
-  cover?: ImageType
-  penalty?: {
-    created_by: ObjectId
-    reason: string
-    expired_at: Date
-  } | null
   created_at?: Date
   updated_at?: Date
 }
@@ -35,16 +26,9 @@ export default class User {
   password: string
   user_type: UserTypeEnum
   user_role: UserRoleEnum
-  badge: BadgeType[]
+  is_verified: boolean
   verify_token: string
   forget_password_token: string
-  avatar: ImageType
-  cover: ImageType
-  penalty: {
-    created_by: ObjectId
-    reason: string
-    expired_at: Date
-  } | null
   created_at: Date
   updated_at: Date
 
@@ -52,29 +36,16 @@ export default class User {
     const date = new Date()
 
     this._id = user._id || new ObjectId()
-    this.display_name = user.display_name
+    this.display_name = user.display_name || user.username
     this.username = user.username
     this.email = user.email
     this.phone = user.phone
     this.password = user.password
     this.user_type = user.user_type || UserTypeEnum.UNVERIFIED
     this.user_role = user.user_role || UserRoleEnum.MEMBER
-    this.badge = user.badge || []
+    this.is_verified = user.is_verified || false
     this.verify_token = user.verify_token || ''
     this.forget_password_token = user.forget_password_token || ''
-    this.avatar = user.avatar || {
-      type: '',
-      path: '',
-      url: '',
-      size: 0
-    }
-    this.cover = user.cover || {
-      type: '',
-      path: '',
-      url: '',
-      size: 0
-    }
-    this.penalty = user.penalty || null
     this.created_at = user.created_at || date
     this.updated_at = user.updated_at || date
   }
