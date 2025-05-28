@@ -1,9 +1,11 @@
 import { ObjectId } from 'mongodb'
+import { ColorType, ColorTypeFull } from '~/constants/colors.constants'
 import { UserRoleEnum, UserTypeEnum } from '~/constants/users.constants'
 
 interface UserType {
   _id?: ObjectId
   display_name?: string
+  display_color?: ColorTypeFull
   username: string
   email: string
   phone: string
@@ -20,6 +22,7 @@ interface UserType {
 export default class User {
   _id: ObjectId
   display_name: string
+  display_color: ColorTypeFull
   username: string
   email: string
   phone: string
@@ -37,6 +40,12 @@ export default class User {
 
     this._id = user._id || new ObjectId()
     this.display_name = user.display_name || user.username
+    this.display_color = user.display_color || {
+      type: ColorType.COLOR_BASIC,
+      color: {
+        color: '#000000'
+      }
+    }
     this.username = user.username
     this.email = user.email
     this.phone = user.phone
