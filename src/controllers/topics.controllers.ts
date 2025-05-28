@@ -13,12 +13,12 @@ export const createTopicController = async (req: Request<ParamsDictionary, any, 
     await topicService.create(req.body, user)
 
     res.json({
-      code: RESPONSE_CODE.GET_USER_INFOMATION_SUCCESSFUL,
+      code: RESPONSE_CODE.CREATE_TOPIC_SUCCESSFUL,
       message: MESSAGE.TOPIC_MESSAGE.CREATE_TOPIC_SUCCESS
     })
   } catch (err) {
     res.json({
-      code: RESPONSE_CODE.GET_USER_INFOMATION_FAILED,
+      code: RESPONSE_CODE.CREATE_TOPIC_FAILED,
       message: MESSAGE.TOPIC_MESSAGE.CREATE_TOPIC_FAILURE
     })
   }

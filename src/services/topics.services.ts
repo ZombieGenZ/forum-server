@@ -6,16 +6,49 @@ import User from '~/models/schemas/users.shemas'
 
 class TopicService {
   async create(payload: CreateTopicRequest, user: User) {
-    let color
-    if (payload.colorType == 'basic') {
-      color = {
+    let text_color
+    let background_color
+
+    if (payload.textColorType == 'basic') {
+      text_color = {
         type: ColorType.COLOR_BASIC,
         color: {
-          color: payload.BasicColor as string
+          color: payload.textBasicColor as string
+        }
+      }
+    } else if (payload.textColorType == 'gradient2') {
+      text_color = {
+        type: ColorType.COLOR_GRADIENT_2,
+        color: {
+          color1: payload.textGradient2Color1 as string,
+          color2: payload.textGradient2Color2 as string
+        }
+      }
+    } else if (payload.textColorType == 'gradient3') {
+      text_color = {
+        type: ColorType.COLOR_GRADIENT_3,
+        color: {
+          color1: payload.textGradient3Color1 as string,
+          color2: payload.textGradient3Color2 as string,
+          color3: payload.textGradient3Color3 as string
+        }
+      }
+    } else {
+      text_color = {
+        type: ColorType.COLOR_RAMBOW,
+        color: null
+      }
+    }
+
+    if (payload.colorType == 'basic') {
+      background_color = {
+        type: ColorType.COLOR_BASIC,
+        color: {
+          color: payload.basicColor as string
         }
       }
     } else if (payload.colorType == 'gradient2') {
-      color = {
+      background_color = {
         type: ColorType.COLOR_GRADIENT_2,
         color: {
           color1: payload.gradient2Color1 as string,
@@ -23,7 +56,7 @@ class TopicService {
         }
       }
     } else if (payload.colorType == 'gradient3') {
-      color = {
+      background_color = {
         type: ColorType.COLOR_GRADIENT_3,
         color: {
           color1: payload.gradient3Color1 as string,
@@ -32,7 +65,7 @@ class TopicService {
         }
       }
     } else {
-      color = {
+      background_color = {
         type: ColorType.COLOR_RAMBOW,
         color: null
       }
@@ -41,7 +74,8 @@ class TopicService {
     await databaseService.topics.insertOne(
       new Topic({
         ...payload,
-        color,
+        text_color,
+        background_color,
         created_by: user._id
       })
     )

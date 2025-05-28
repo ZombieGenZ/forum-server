@@ -4,7 +4,8 @@ import { ColorTypeFull } from '~/constants/colors.constants'
 interface TopicType {
   _id?: ObjectId
   topic: string
-  color: ColorTypeFull
+  text_color: ColorTypeFull
+  background_color: ColorTypeFull
   created_at?: Date
   created_by: ObjectId
   updated_at?: Date
@@ -14,7 +15,8 @@ interface TopicType {
 export default class Topic {
   _id: ObjectId
   topic: string
-  color: ColorTypeFull
+  text_color: ColorTypeFull
+  background_color: ColorTypeFull
   created_at: Date
   created_by: ObjectId
   updated_at: Date
@@ -25,7 +27,8 @@ export default class Topic {
 
     this._id = topic._id || new ObjectId()
     this.topic = topic.topic
-    this.color = topic.color
+    this.background_color = topic.background_color
+    this.text_color = topic.text_color
     this.created_at = topic.created_at || date
     this.created_by = topic.created_by
     this.updated_at = topic.updated_at || date
