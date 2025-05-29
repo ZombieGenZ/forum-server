@@ -3,6 +3,7 @@ import { ObjectId } from 'mongodb'
 interface PostType {
   _id?: ObjectId
   title: string
+  summary?: string
   content: string
   user: ObjectId
   url: string
@@ -16,6 +17,7 @@ interface PostType {
 export default class Post {
   _id: ObjectId
   title: string
+  summary: string
   content: string
   user: ObjectId
   url: string
@@ -30,6 +32,7 @@ export default class Post {
 
     this._id = post._id || new ObjectId()
     this.title = post.title
+    this.summary = post.summary || ''
     this.content = post.content
     this.user = post.user
     this.url = post.url

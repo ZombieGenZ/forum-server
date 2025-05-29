@@ -119,6 +119,8 @@ export const updatePostValidator = async (req: Request, res: Response, next: Nex
               throw new Error(MESSAGE.POST_MESSAGE.POST_ID_NOT_FOUND)
             }
 
+            ;(req as Request).post = post
+
             return true
           }
         }
@@ -230,6 +232,8 @@ export const deletePostValidator = async (req: Request, res: Response, next: Nex
             if (user.user_role !== UserRoleEnum.ADMINISTRATOR && !post.user.equals(user._id)) {
               throw new Error(MESSAGE.POST_MESSAGE.POST_ID_NOT_FOUND)
             }
+
+            ;(req as Request).post = post
 
             return true
           }

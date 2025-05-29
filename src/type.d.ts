@@ -3,12 +3,10 @@ import { Server as SocketIOServer } from 'socket.io'
 import { TokenPayload } from '~/models/requests/authentication.requests'
 import User from '~/models/schemas/users.schemas'
 import RefreshToken from './models/schemas/refreshtoken.schemas'
-import Category from './models/schemas/categories.schemas'
 import { ImageType } from './constants/images.constants'
-import Product from './models/schemas/product.schemas'
-import Order from './models/schemas/orders.schemas'
 import { ProductList } from './constants/orders.constants'
-import Topic from './models/schemas/topics.shemas';
+import Topic from './models/schemas/topics.shemas'
+import Post from './models/schemas/posts.shemas'
 
 declare module 'express' {
   interface Request {
@@ -21,14 +19,6 @@ declare module 'express' {
     refresh_token?: RefreshToken
     image?: ImageType
     topic?: Topic
-    // category?: Category
-    // product?: Product
-    // image?: ImageType
-    // total_quantity?: number
-    // total_price?: number
-    // product_list?: ProductList[]
-    // order?: Order
-    // banned_time?: Date
-    // discount?: number
+    post?: Post
   }
 }

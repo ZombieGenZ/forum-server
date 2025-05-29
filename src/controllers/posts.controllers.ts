@@ -3,6 +3,8 @@ import { ParamsDictionary } from 'express-serve-static-core'
 import { MESSAGE } from '~/constants/message.constants'
 import { RESPONSE_CODE } from '~/constants/responseCode.constants'
 import { CreatePostRequestBody, DeletePostRequestBody, UpdatePostRequestBody } from '~/models/requests/posts.requests'
+import Post from '~/models/schemas/posts.shemas'
+import Topic from '~/models/schemas/topics.shemas'
 import User from '~/models/schemas/users.shemas'
 import postService from '~/services/posts.services'
 
@@ -32,9 +34,10 @@ export const updatePostController = async (
   res: Response
 ) => {
   try {
+    const topic = req.topic as Topic
     const user = req.user as User
 
-    await postService.update(req.body, user)
+    await postService.update(req.body, user, topic)
 
     res.json({
       code: RESPONSE_CODE.UPDATE_POST_SUCCESSFUL,
@@ -53,7 +56,8 @@ export const deletePostController = async (
   res: Response
 ) => {
   try {
-    await postService.delete(req.body)
+        const post = req.post as Post
+    await postService.delete(req.body, post)
 
     res.json({
       code: RESPONSE_CODE.DELETE_POST_SUCCESSFUL,
