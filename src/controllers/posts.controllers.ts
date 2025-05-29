@@ -66,3 +66,20 @@ export const deletePostController = async (
     })
   }
 }
+
+export const getPostController = async (_: Request, res: Response) => {
+  try {
+    const posts = await postService.getPost()
+
+    res.json({
+      code: RESPONSE_CODE.GET_POST_SUCCESSFUL,
+      message: MESSAGE.POST_MESSAGE.GET_POST_SUCCESS,
+      posts
+    })
+  } catch (err) {
+    res.json({
+      code: RESPONSE_CODE.GET_POST_FAILED,
+      message: MESSAGE.POST_MESSAGE.GET_POST_FAILURE
+    })
+  }
+}

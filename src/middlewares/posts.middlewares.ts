@@ -36,12 +36,31 @@ export const createPostValidator = async (req: Request, res: Response, next: Nex
           errorMessage: MESSAGE.POST_MESSAGE.CONTENT_MUST_BE_A_STRING
         }
       },
-      can_comment: {
+      topic_id: {
         notEmpty: {
-          errorMessage: MESSAGE.POST_MESSAGE.CAN_COMMENT_IS_REQUIRED
+          errorMessage: MESSAGE.POST_MESSAGE.TOPIC_ID_IS_REQUIRED
         },
-        isBoolean: {
-          errorMessage: MESSAGE.POST_MESSAGE.CAN_COMMENT_MUST_BE_A_BOOLEAN
+        trim: true,
+        isString: {
+          errorMessage: MESSAGE.POST_MESSAGE.TOPIC_ID_MUST_BE_A_STRING
+        },
+        isMongoId: {
+          errorMessage: MESSAGE.POST_MESSAGE.TOPIC_ID_MUST_BE_A_ID
+        },
+        custom: {
+          options: async (value, { req }) => {
+            const topic = await databaseService.topics.findOne({
+              _id: new ObjectId(value)
+            })
+
+            if (!topic) {
+              throw new Error(MESSAGE.POST_MESSAGE.TOPIC_ID_NOT_FOUND)
+            }
+
+            ;(req as Request).topic = topic
+
+            return true
+          }
         }
       }
     },
@@ -129,12 +148,31 @@ export const updatePostValidator = async (req: Request, res: Response, next: Nex
           errorMessage: MESSAGE.POST_MESSAGE.CONTENT_MUST_BE_A_STRING
         }
       },
-      can_comment: {
+      topic_id: {
         notEmpty: {
-          errorMessage: MESSAGE.POST_MESSAGE.CAN_COMMENT_IS_REQUIRED
+          errorMessage: MESSAGE.POST_MESSAGE.TOPIC_ID_IS_REQUIRED
         },
-        isBoolean: {
-          errorMessage: MESSAGE.POST_MESSAGE.CAN_COMMENT_MUST_BE_A_BOOLEAN
+        trim: true,
+        isString: {
+          errorMessage: MESSAGE.POST_MESSAGE.TOPIC_ID_MUST_BE_A_STRING
+        },
+        isMongoId: {
+          errorMessage: MESSAGE.POST_MESSAGE.TOPIC_ID_MUST_BE_A_ID
+        },
+        custom: {
+          options: async (value, { req }) => {
+            const topic = await databaseService.topics.findOne({
+              _id: new ObjectId(value)
+            })
+
+            if (!topic) {
+              throw new Error(MESSAGE.POST_MESSAGE.TOPIC_ID_NOT_FOUND)
+            }
+
+            ;(req as Request).topic = topic
+
+            return true
+          }
         }
       }
     },

@@ -5,6 +5,10 @@ import { randomNumber } from './random.utils'
 export async function generateUrl(str: string) {
   const firstUrl = convertUrl(str)
 
+  if (!firstUrl || firstUrl.length === 0) {
+    return randomNumber().toString()
+  }
+
   if (!(await postService.checkUrl(firstUrl))) {
     return firstUrl
   }

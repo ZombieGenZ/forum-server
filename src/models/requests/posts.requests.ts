@@ -2,7 +2,7 @@ export interface CreatePostRequestBody {
   refresh_token: string
   title: string
   content: string
-  can_comment: boolean
+  topic_id: string
 }
 
 export interface UpdatePostRequestBody {
@@ -10,7 +10,7 @@ export interface UpdatePostRequestBody {
   post_id: string
   title: string
   content: string
-  can_comment: boolean
+  topic_id: string
 }
 
 export interface DeletePostRequestBody {

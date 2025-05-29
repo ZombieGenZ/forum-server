@@ -16,6 +16,7 @@ class PostService {
     await databaseService.posts.insertOne(
       new Post({
         ...payload,
+        topic: new ObjectId(payload.topic_id),
         user: user._id,
         url
       })
@@ -32,8 +33,8 @@ class PostService {
         $set: {
           title: payload.title,
           content: payload.content,
+          topic: new ObjectId(payload.topic_id),
           updated_by: user._id,
-          can_comment: payload.can_comment,
           updated_can_commnet: user._id,
           url: url
         },
@@ -47,6 +48,41 @@ class PostService {
     await databaseService.posts.deleteOne({
       _id: new ObjectId(payload.post_id)
     })
+  }
+  async getPost() {
+    return await databaseService.posts
+      .aggregate([
+        {
+          $lookup: {
+            from: process.env.DATABASE_TOPIC_COLLECTION as string,
+            localField: 'topic',
+            foreignField: '_id',
+            as: 'topic'
+          }
+        },
+        {
+          $unwind: '$topic'
+        },
+        {
+          $lookup: {
+            from: process.env.DATABASE_USER_COLLECTION,
+            localField: 'user',
+            foreignField: '_id',
+            as: 'user'
+          }
+        },
+        {
+          $unwind: '$user'
+        },
+        {
+          $project: {
+            'user.password': 0,
+            'user.verify_token': 0,
+            'user.forget_password_token': 0
+          }
+        }
+      ])
+      .toArray()
   }
 }
 

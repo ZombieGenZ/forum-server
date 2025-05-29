@@ -5,7 +5,11 @@ import {
   getTopicController,
   updateTopicController
 } from '~/controllers/topics.controllers'
-import { authenticateAdministratorValidator, authenticateValidator } from '~/middlewares/authenticate.middlewares'
+import {
+  authenticateAdministratorValidator,
+  authenticateValidator,
+  verifiedAccountValidator
+} from '~/middlewares/authenticate.middlewares'
 import { colorTextValidator, colorValidator } from '~/middlewares/colors.middlewares'
 import { createTopicValidator, deleteTopicValidator, updateTopicValidator } from '~/middlewares/topics.middlewares'
 import { wrapRequestHandler } from '~/utils/handlers.utils'
@@ -40,6 +44,7 @@ const router = express.Router()
 router.post(
   '/create',
   authenticateValidator,
+  verifiedAccountValidator,
   authenticateAdministratorValidator,
   createTopicValidator,
   colorValidator,
@@ -77,6 +82,7 @@ router.post(
 router.put(
   '/update',
   authenticateValidator,
+  verifiedAccountValidator,
   authenticateAdministratorValidator,
   updateTopicValidator,
   colorValidator,
@@ -99,6 +105,7 @@ router.put(
 router.delete(
   '/delete',
   authenticateValidator,
+  verifiedAccountValidator,
   authenticateAdministratorValidator,
   deleteTopicValidator,
   wrapRequestHandler(deleteTopicController)
@@ -116,11 +123,6 @@ router.delete(
  *    topic: string
  * }
  */
-router.post(
-  '/get-topic',
-  authenticateValidator,
-  authenticateAdministratorValidator,
-  wrapRequestHandler(getTopicController)
-)
+router.post('/get-topic', authenticateValidator, verifiedAccountValidator, wrapRequestHandler(getTopicController))
 
 export default router

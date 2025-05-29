@@ -12,7 +12,8 @@ export class MESSAGE {
     REFRESH_TOKEN_MUST_BE_A_STRING: 'Refresh token phải là một chuỗi ký tự',
     REFRESH_TOKEN_INVALID: 'Refresh token không hợp lệ',
     AUTHENTICATION_FAILED: 'Yêu cầu xác thực trước khi thực hiện hành động này',
-    YOU_DONT_HAVE_PERMISSION_TO_DO_THIS: 'Bạn không có quyền làm điều này'
+    YOU_DONT_HAVE_PERMISSION_TO_DO_THIS: 'Bạn không có quyền làm điều này',
+    YOUR_ACCOUNT_IS_NOT_VERIFIED: 'Tài khoản của bạn chưa được xác thực, vui lòng xác thực tài khoản trước khi thực hiện hành động này',
   } as const
 
   static USER_MESSAGE = {
@@ -119,13 +120,17 @@ export class MESSAGE {
     TITLE_LENGTH_MUST_BE_FROM_1_TO_150: 'Tiêu đề phải có độ dài từ 1 đến 150 ký tự',
     CONTENT_IS_REQUIRED: 'Không được bỏ trống nội dung',
     CONTENT_MUST_BE_A_STRING: 'Nội dung phải là một chuỗi ký tự',
-    CAN_COMMENT_IS_REQUIRED: 'Không được bỏ trống có thể bình luận',
-    CAN_COMMENT_MUST_BE_A_BOOLEAN: 'Có thể bình luận phải là một giá trị boolean',
+    TOPIC_ID_IS_REQUIRED: 'Không được bỏ trống ID chủ đề',
+    TOPIC_ID_MUST_BE_A_STRING: 'ID chủ đề phải là một chuỗi ký tự',
+    TOPIC_ID_MUST_BE_A_ID: 'ID chủ đề phải là một ID hợp lệ',
+    TOPIC_ID_NOT_FOUND: 'ID chủ đề không tồn tại',
     CREATE_POST_SUCCESS: 'Tạo bài viết thành công',
     CREATE_POST_FAILURE: 'Tạo bài viết thất bại',
     UPDATE_POST_SUCCESS: 'Cập nhật bài viết thành công',
     UPDATE_POST_FAILURE: 'Cập nhật bài viết thất bại',
     DELETE_POST_SUCCESS: 'Xóa bài viết thành công',
-    DELETE_POST_FAILURE: 'Xóa bài viết thất bại'
+    DELETE_POST_FAILURE: 'Xóa bài viết thất bại',
+    GET_POST_SUCCESS: 'Lấy thông tin bài viết thành công',
+    GET_POST_FAILURE: 'Lấy thông tin bài viết thất bại'
   }
 }

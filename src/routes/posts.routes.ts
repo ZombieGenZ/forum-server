@@ -1,6 +1,11 @@
 import express from 'express'
-import { createPostController, deletePostController, updatePostController } from '~/controllers/posts.controllers'
-import { authenticateValidator } from '~/middlewares/authenticate.middlewares'
+import {
+  createPostController,
+  deletePostController,
+  getPostController,
+  updatePostController
+} from '~/controllers/posts.controllers'
+import { authenticateValidator, verifiedAccountValidator } from '~/middlewares/authenticate.middlewares'
 import { createPostValidator, deletePostValidator, updatePostValidator } from '~/middlewares/posts.middlewares'
 import { wrapRequestHandler } from '~/utils/handlers.utils'
 const router = express.Router()
@@ -14,12 +19,18 @@ const router = express.Router()
  * },
  * body: {
  *    refresh_token: string,
+ *    topic_id: string,
  *    title: string,
- *    content: string,
- *    can_comment: boolean
+ *    content: string
  * }
  */
-router.post('/create', authenticateValidator, createPostValidator, wrapRequestHandler(createPostController))
+router.post(
+  '/create',
+  authenticateValidator,
+  verifiedAccountValidator,
+  createPostValidator,
+  wrapRequestHandler(createPostController)
+)
 
 /*
  * Description: Chỉnh sửa bài viết
@@ -36,7 +47,13 @@ router.post('/create', authenticateValidator, createPostValidator, wrapRequestHa
  *    can_comment: boolean
  * }
  */
-router.put('/update', authenticateValidator, updatePostValidator, wrapRequestHandler(updatePostController))
+router.put(
+  '/update',
+  authenticateValidator,
+  verifiedAccountValidator,
+  updatePostValidator,
+  wrapRequestHandler(updatePostController)
+)
 
 /*
  * Description: Xóa bài viết
@@ -50,6 +67,19 @@ router.put('/update', authenticateValidator, updatePostValidator, wrapRequestHan
  *    post_id: string
  * }
  */
-router.delete('/delete', authenticateValidator, deletePostValidator, wrapRequestHandler(deletePostController))
+router.delete(
+  '/delete',
+  authenticateValidator,
+  verifiedAccountValidator,
+  deletePostValidator,
+  wrapRequestHandler(deletePostController)
+)
+
+/*
+ * Description: Lấy thông tin bài viết
+ * Path: /api/posts/get-post
+ * Method: GET
+ */
+router.get('/get-post', wrapRequestHandler(getPostController))
 
 export default router

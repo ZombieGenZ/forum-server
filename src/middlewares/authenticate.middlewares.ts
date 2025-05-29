@@ -6,7 +6,7 @@ import databaseService from '~/services/database.services'
 import { ObjectId } from 'mongodb'
 import HTTPSTATUS from '~/constants/httpStatus.constants'
 import { RESPONSE_CODE } from '~/constants/responseCode.constants'
-import { UserRoleEnum } from '~/constants/users.constants'
+import { UserRoleEnum, UserTypeEnum } from '~/constants/users.constants'
 import { TokenType } from '~/constants/jwt.constants'
 import { MESSAGE } from '~/constants/message.constants'
 import User from '~/models/schemas/users.shemas'
@@ -286,6 +286,35 @@ export const authenticateAdministratorUploadValidator = async (req: Request, res
     res.status(HTTPSTATUS.UNAUTHORIZED).json({
       code: RESPONSE_CODE.AUTHENTICATION_FAILED,
       message: MESSAGE.AUTHENTICATE_MESSAGE.YOU_DONT_HAVE_PERMISSION_TO_DO_THIS
+    })
+    return
+  }
+
+  next()
+}
+
+export const verifiedAccountValidator = async (req: Request, res: Response, next: NextFunction) => {
+  const user = req.user as User
+
+  if (user.user_type !== UserTypeEnum.VERIFIED) {
+    res.status(HTTPSTATUS.UNAUTHORIZED).json({
+      code: RESPONSE_CODE.AUTHENTICATION_FAILED,
+      message: MESSAGE.AUTHENTICATE_MESSAGE.YOUR_ACCOUNT_IS_NOT_VERIFIED
+    })
+    return
+  }
+
+  next()
+}
+
+export const verifiedAccountUploadValidator = async (req: Request, res: Response, next: NextFunction) => {
+  const user = req.user as User
+
+  if (user.user_type !== UserTypeEnum.VERIFIED) {
+    await deleteTemporaryFile(req.file)
+    res.status(HTTPSTATUS.UNAUTHORIZED).json({
+      code: RESPONSE_CODE.AUTHENTICATION_FAILED,
+      message: MESSAGE.AUTHENTICATE_MESSAGE.YOUR_ACCOUNT_IS_NOT_VERIFIED
     })
     return
   }
