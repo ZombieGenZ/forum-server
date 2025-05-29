@@ -40,8 +40,6 @@ export const setupUploadImage = async (req: Request, res: Response, next: NextFu
       size: image.size
     }
 
-    console.log(img)
-
     req.image = img
     next()
   } catch (error) {

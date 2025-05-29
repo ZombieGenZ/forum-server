@@ -264,3 +264,109 @@ export const deletePostValidator = async (req: Request, res: Response, next: Nex
       return
     })
 }
+
+export const getDetailPostValidator = async (req: Request, res: Response, next: NextFunction) => {
+  checkSchema(
+    {
+      url: {
+        notEmpty: {
+          errorMessage: MESSAGE.POST_MESSAGE.URL_IS_REQUIRED
+        },
+        trim: true,
+        isString: {
+          errorMessage: MESSAGE.POST_MESSAGE.URL_MUST_BE_A_STRING
+        },
+        custom: {
+          options: async (value, { req }) => {
+            const post = await databaseService.posts.findOne({
+              url: value
+            })
+
+            if (!post) {
+              throw new Error(MESSAGE.POST_MESSAGE.URL_NOT_FOUND)
+            }
+
+            ;(req as Request).post = post
+
+            return true
+          }
+        }
+      }
+    },
+    ['query']
+  )
+    .run(req)
+    .then(() => {
+      const errors = validationResult(req)
+      if (!errors.isEmpty()) {
+        res.status(HTTPSTATUS.UNPROCESSABLE_ENTITY).json({
+          code: RESPONSE_CODE.INPUT_DATA_ERROR,
+          message: MESSAGE.SYSTEM_MESSAGE.VALIDATION_ERROR,
+          errors: errors.mapped()
+        })
+        return
+      }
+      next()
+      return
+    })
+    .catch((err) => {
+      res.status(HTTPSTATUS.UNPROCESSABLE_ENTITY).json({
+        code: RESPONSE_CODE.FATAL_INPUT_ERROR,
+        message: err
+      })
+      return
+    })
+}
+
+export const checkEditPostPostValidator = async (req: Request, res: Response, next: NextFunction) => {
+  checkSchema(
+    {
+      url: {
+        notEmpty: {
+          errorMessage: MESSAGE.POST_MESSAGE.URL_IS_REQUIRED
+        },
+        trim: true,
+        isString: {
+          errorMessage: MESSAGE.POST_MESSAGE.URL_MUST_BE_A_STRING
+        },
+        custom: {
+          options: async (value, { req }) => {
+            const post = await databaseService.posts.findOne({
+              url: value
+            })
+
+            if (!post) {
+              throw new Error(MESSAGE.POST_MESSAGE.URL_NOT_FOUND)
+            }
+
+            ;(req as Request).post = post
+
+            return true
+          }
+        }
+      }
+    },
+    ['body']
+  )
+    .run(req)
+    .then(() => {
+      const errors = validationResult(req)
+      if (!errors.isEmpty()) {
+        res.status(HTTPSTATUS.UNPROCESSABLE_ENTITY).json({
+          code: RESPONSE_CODE.INPUT_DATA_ERROR,
+          message: MESSAGE.SYSTEM_MESSAGE.VALIDATION_ERROR,
+          errors: errors.mapped()
+        })
+        return
+      }
+      next()
+      return
+    })
+    .catch((err) => {
+      res.status(HTTPSTATUS.UNPROCESSABLE_ENTITY).json({
+        code: RESPONSE_CODE.FATAL_INPUT_ERROR,
+        message: err
+      })
+      return
+    })
+}

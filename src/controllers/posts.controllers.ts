@@ -2,7 +2,13 @@ import { Request, Response } from 'express'
 import { ParamsDictionary } from 'express-serve-static-core'
 import { MESSAGE } from '~/constants/message.constants'
 import { RESPONSE_CODE } from '~/constants/responseCode.constants'
-import { CreatePostRequestBody, DeletePostRequestBody, UpdatePostRequestBody } from '~/models/requests/posts.requests'
+import { UserRoleEnum } from '~/constants/users.constants'
+import {
+  CheckEditPostRequestBody,
+  CreatePostRequestBody,
+  DeletePostRequestBody,
+  UpdatePostRequestBody
+} from '~/models/requests/posts.requests'
 import Post from '~/models/schemas/posts.shemas'
 import Topic from '~/models/schemas/topics.shemas'
 import User from '~/models/schemas/users.shemas'
@@ -56,7 +62,7 @@ export const deletePostController = async (
   res: Response
 ) => {
   try {
-        const post = req.post as Post
+    const post = req.post as Post
     await postService.delete(req.body, post)
 
     res.json({
@@ -84,6 +90,46 @@ export const getPostController = async (_: Request, res: Response) => {
     res.json({
       code: RESPONSE_CODE.GET_POST_FAILED,
       message: MESSAGE.POST_MESSAGE.GET_POST_FAILURE
+    })
+  }
+}
+
+export const getPostDetailController = async (req: Request, res: Response) => {
+  try {
+    const url = req.query.url as string
+
+    const posts = await postService.getPostDetail(url)
+
+    res.json({
+      code: RESPONSE_CODE.GET_POST_SUCCESSFUL,
+      message: MESSAGE.POST_MESSAGE.GET_POST_SUCCESS,
+      posts
+    })
+  } catch (err) {
+    res.json({
+      code: RESPONSE_CODE.GET_POST_FAILED,
+      message: MESSAGE.POST_MESSAGE.GET_POST_FAILURE
+    })
+  }
+}
+
+export const checkEditPostController = async (
+  req: Request<ParamsDictionary, any, CheckEditPostRequestBody>,
+  res: Response
+) => {
+  try {
+    const user = req.user as User
+    const post = req.post as Post
+
+    res.json({
+      code: RESPONSE_CODE.CHECK_PERMISSION_SUCCESSFUL,
+      message: MESSAGE.AUTHENTICATE_MESSAGE.CHECK_PERMISSION_SUCCESS,
+      allow: user.user_role == UserRoleEnum.ADMINISTRATOR ? true : post.user.equals(user._id)
+    })
+  } catch (err) {
+    res.json({
+      code: RESPONSE_CODE.CHECK_PERMISSION_FAILED,
+      message: MESSAGE.AUTHENTICATE_MESSAGE.CHECK_PERMISSION_FAILURE
     })
   }
 }

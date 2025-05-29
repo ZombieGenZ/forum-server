@@ -7,6 +7,7 @@ import { ImageType } from './constants/images.constants'
 import { ProductList } from './constants/orders.constants'
 import Topic from './models/schemas/topics.shemas'
 import Post from './models/schemas/posts.shemas'
+import Comment from './models/schemas/comments.shemas'
 
 declare module 'express' {
   interface Request {
@@ -20,5 +21,6 @@ declare module 'express' {
     image?: ImageType
     topic?: Topic
     post?: Post
+    comment?: Comment
   }
 }

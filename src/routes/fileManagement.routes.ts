@@ -11,7 +11,7 @@ const router = express.Router()
  * Path: /api/file-management/upload-image
  * Method: POST
  * headers: {
- *    authorization?: Bearer <token>
+ *    authorization: Bearer <token>
  * },
  * body: {
  *    refresh_token: string,

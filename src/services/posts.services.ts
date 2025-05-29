@@ -142,6 +142,46 @@ class PostService {
       ])
       .toArray()
   }
+  async getPostDetail(url: string) {
+    return await databaseService.posts
+      .aggregate([
+        {
+          $match: {
+            url
+          }
+        },
+        {
+          $lookup: {
+            from: process.env.DATABASE_TOPIC_COLLECTION as string,
+            localField: 'topic',
+            foreignField: '_id',
+            as: 'topic'
+          }
+        },
+        {
+          $unwind: '$topic'
+        },
+        {
+          $lookup: {
+            from: process.env.DATABASE_USER_COLLECTION,
+            localField: 'user',
+            foreignField: '_id',
+            as: 'user'
+          }
+        },
+        {
+          $unwind: '$user'
+        },
+        {
+          $project: {
+            'user.password': 0,
+            'user.verify_token': 0,
+            'user.forget_password_token': 0
+          }
+        }
+      ])
+      .next()
+  }
 }
 
 const postService = new PostService()

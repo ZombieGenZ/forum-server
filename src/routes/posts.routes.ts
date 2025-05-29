@@ -1,12 +1,20 @@
 import express from 'express'
 import {
+  checkEditPostController,
   createPostController,
   deletePostController,
   getPostController,
+  getPostDetailController,
   updatePostController
 } from '~/controllers/posts.controllers'
 import { authenticateValidator, verifiedAccountValidator } from '~/middlewares/authenticate.middlewares'
-import { createPostValidator, deletePostValidator, updatePostValidator } from '~/middlewares/posts.middlewares'
+import {
+  checkEditPostPostValidator,
+  createPostValidator,
+  deletePostValidator,
+  getDetailPostValidator,
+  updatePostValidator
+} from '~/middlewares/posts.middlewares'
 import { wrapRequestHandler } from '~/utils/handlers.utils'
 const router = express.Router()
 
@@ -15,7 +23,7 @@ const router = express.Router()
  * Path: /api/posts/create
  * Method: POST
  * headers: {
- *    authorization?: Bearer <token>
+ *    authorization: Bearer <token>
  * },
  * body: {
  *    refresh_token: string,
@@ -37,7 +45,7 @@ router.post(
  * Path: /api/posts/update
  * Method: PUT
  * headers: {
- *    authorization?: Bearer <token>
+ *    authorization: Bearer <token>
  * },
  * body: {
  *    refresh_token: string,
@@ -60,7 +68,7 @@ router.put(
  * Path: /api/posts/delete
  * Method: DELETE
  * headers: {
- *    authorization?: Bearer <token>
+ *    authorization: Bearer <token>
  * },
  * body: {
  *    refresh_token: string,
@@ -81,5 +89,35 @@ router.delete(
  * Method: GET
  */
 router.get('/get-post', wrapRequestHandler(getPostController))
+
+/*
+ * Description: Lấy thông tin bài viết
+ * Path: /api/posts/get-post-detail
+ * Method: GET
+ * query: {
+ *    url: string
+ * }
+ */
+router.get('/get-post-detail', getDetailPostValidator, wrapRequestHandler(getPostDetailController))
+
+/*
+ * Description: Kiểm tra quyền chỉnh sửa bài viết
+ * Path: /api/posts/check-edit-post
+ * Method: POST
+ * headers: {
+ *    authorization: Bearer <token>
+ * },
+ * body: {
+ *    refresh_token: string,
+ *    url: string
+ * }
+ */
+router.post(
+  '/check-edit-post',
+  authenticateValidator,
+  verifiedAccountValidator,
+  checkEditPostPostValidator,
+  wrapRequestHandler(checkEditPostController)
+)
 
 export default router

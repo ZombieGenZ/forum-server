@@ -17,3 +17,8 @@ export interface DeletePostRequestBody {
   refresh_token: string
   post_id: string
 }
+
+export interface CheckEditPostRequestBody {
+  refresh_token: string
+  post_id: string
+}

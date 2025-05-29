@@ -20,7 +20,7 @@ const router = express.Router()
  * Path: /api/topics/create
  * Method: POST
  * headers: {
- *    authorization?: Bearer <token>
+ *    authorization: Bearer <token>
  * },
  * Body: {
  *    refresh_token: string,
@@ -57,7 +57,7 @@ router.post(
  * Path: /api/topics/update
  * Method: POST
  * headers: {
- *    authorization?: Bearer <token>
+ *    authorization: Bearer <token>
  * },
  * Body: {
  *    refresh_token: string,
@@ -95,7 +95,7 @@ router.put(
  * Path: /api/topics/delete
  * Method: POST
  * headers: {
- *    authorization?: Bearer <token>
+ *    authorization: Bearer <token>
  * },
  * Body: {
  *    refresh_token: string,
@@ -116,7 +116,7 @@ router.delete(
  * Path: /api/topics/get-topic
  * Method: POST
  * headers: {
- *    authorization?: Bearer <token>
+ *    authorization: Bearer <token>
  * },
  * Body: {
  *    refresh_token: string,

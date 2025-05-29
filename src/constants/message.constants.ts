@@ -13,7 +13,10 @@ export class MESSAGE {
     REFRESH_TOKEN_INVALID: 'Refresh token không hợp lệ',
     AUTHENTICATION_FAILED: 'Yêu cầu xác thực trước khi thực hiện hành động này',
     YOU_DONT_HAVE_PERMISSION_TO_DO_THIS: 'Bạn không có quyền làm điều này',
-    YOUR_ACCOUNT_IS_NOT_VERIFIED: 'Tài khoản của bạn chưa được xác thực, vui lòng xác thực tài khoản trước khi thực hiện hành động này',
+    YOUR_ACCOUNT_IS_NOT_VERIFIED:
+      'Tài khoản của bạn chưa được xác thực, vui lòng xác thực tài khoản trước khi thực hiện hành động này',
+    CHECK_PERMISSION_SUCCESS: 'Kiểm tra quyền thành công',
+    CHECK_PERMISSION_FAILURE: 'Kiểm tra quyền thất bại'
   } as const
 
   static USER_MESSAGE = {
@@ -131,6 +134,30 @@ export class MESSAGE {
     DELETE_POST_SUCCESS: 'Xóa bài viết thành công',
     DELETE_POST_FAILURE: 'Xóa bài viết thất bại',
     GET_POST_SUCCESS: 'Lấy thông tin bài viết thành công',
-    GET_POST_FAILURE: 'Lấy thông tin bài viết thất bại'
+    GET_POST_FAILURE: 'Lấy thông tin bài viết thất bại',
+    URL_IS_REQUIRED: 'Không được bỏ trống URL',
+    URL_MUST_BE_A_STRING: 'URL phải là một chuỗi ký tự',
+    URL_NOT_FOUND: 'URL không tồn tại'
+  }
+
+  static COMMENT_MESSAGE = {
+    POST_ID_IS_REQUIRED: 'Không được bỏ trống ID bài viết',
+    POST_ID_MUST_BE_A_STRING: 'ID bài viết phải là một chuỗi ký tự',
+    POST_ID_MUST_BE_A_ID: 'ID bài viết phải là một ID hợp lệ',
+    POST_ID_NOT_FOUND: 'ID bài viết không tồn tại',
+    CONTENT_IS_REQUIRED: 'Không được bỏ trống nội dung',
+    CONTENT_MUST_BE_A_STRING: 'Nội dung phải là một chuỗi ký tự',
+    COMMENT_ID_IS_REQUIRED: 'Không được bỏ trống ID bình luận',
+    COMMENT_ID_MUST_BE_A_STRING: 'ID bình luận phải là một chuỗi ký tự',
+    COMMENT_ID_MUST_BE_A_ID: 'ID bình luận phải là một ID hợp lệ',
+    COMMENT_ID_NOT_FOUND: 'ID bình luận không tồn tại',
+    CREATE_COMMENT_SUCCESS: 'Tạo bình luận thành công',
+    CREATE_COMMENT_FAILURE: 'Tạo bình luận thất bại',
+    UPDATE_COMMENT_SUCCESS: 'Cập nhật bình luận thành công',
+    UPDATE_COMMENT_FAILURE: 'Cập nhật bình luận thất bại',
+    DELETE_COMMENT_SUCCESS: 'Xóa bình luận thành công',
+    DELETE_COMMENT_FAILURE: 'Xóa bình luận thất bại',
+    GET_COMMENT_SUCCESS: 'Lấy thông tin bình luận thành công',
+    GET_COMMENT_FAILURE: 'Lấy thông tin bình luận thất bại'
   }
 }

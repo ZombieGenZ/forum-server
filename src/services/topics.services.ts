@@ -48,7 +48,7 @@ class TopicService {
           color: payload.basicColor as string
         }
       }
-    } else if (payload.colorType == ColorType.COLOR_BASIC) {
+    } else if (payload.colorType == ColorType.COLOR_GRADIENT_2) {
       background_color = {
         type: ColorType.COLOR_GRADIENT_2,
         color: {
@@ -56,7 +56,7 @@ class TopicService {
           color2: payload.gradient2Color2 as string
         }
       }
-    } else if (payload.colorType == ColorType.COLOR_BASIC) {
+    } else if (payload.colorType == ColorType.COLOR_GRADIENT_3) {
       background_color = {
         type: ColorType.COLOR_GRADIENT_3,
         color: {
@@ -123,7 +123,7 @@ class TopicService {
           color: payload.basicColor as string
         }
       }
-    } else if (payload.colorType == ColorType.COLOR_BASIC) {
+    } else if (payload.colorType == ColorType.COLOR_GRADIENT_2) {
       background_color = {
         type: ColorType.COLOR_GRADIENT_2,
         color: {
@@ -131,7 +131,7 @@ class TopicService {
           color2: payload.gradient2Color2 as string
         }
       }
-    } else if (payload.colorType == ColorType.COLOR_BASIC) {
+    } else if (payload.colorType == ColorType.COLOR_GRADIENT_3) {
       background_color = {
         type: ColorType.COLOR_GRADIENT_3,
         color: {
@@ -147,19 +147,22 @@ class TopicService {
       }
     }
 
-    await databaseService.topics.updateOne({
-      _id: new ObjectId(payload.topic_id)
-    }, {
-      $set: {
-        topic: payload.topic,
-        text_color,
-        background_color,
-        updated_by: user._id
+    await databaseService.topics.updateOne(
+      {
+        _id: new ObjectId(payload.topic_id)
       },
-      $currentDate: {
-        updated_at: true
+      {
+        $set: {
+          topic: payload.topic,
+          text_color,
+          background_color,
+          updated_by: user._id
+        },
+        $currentDate: {
+          updated_at: true
+        }
       }
-    })
+    )
   }
   async delete(payload: DeleteTopicRequest) {
     await databaseService.topics.deleteOne({

@@ -39,7 +39,7 @@ class UserService {
     const verifyUrl = `${process.env.APP_URL}/verify-account?token=${verifyToken}`
 
     await databaseService.users.insertOne(
-      new User({ ...payload, _id: user_id, verify_token: verifyUrl, password: HashPassword(payload.password) })
+      new User({ ...payload, _id: user_id, verify_token: verifyToken, password: HashPassword(payload.password) })
     )
 
     const authenticate = await this.signAccessTokenAndRefreshToken(user_id.toString())

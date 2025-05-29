@@ -321,3 +321,100 @@ export const verifiedAccountUploadValidator = async (req: Request, res: Response
 
   next()
 }
+
+export const haveUserValidator = async (req: Request, res: Response, next: NextFunction) => {
+  await checkSchema(
+    {
+      authorization: {
+        optional: true,
+        trim: true,
+        isString: {
+          errorMessage: MESSAGE.AUTHENTICATE_MESSAGE.ACCESS_TOKEN_MUST_BE_A_STRING
+        },
+        custom: {
+          options: async (value, { req }) => {
+            if (!value) return true
+            const authorization = value.split(' ')
+            if (authorization[0] !== 'Bearer' || authorization[1] === '') {
+              throw new Error(MESSAGE.AUTHENTICATE_MESSAGE.ACCESS_TOKEN_INVALID)
+            }
+            try {
+              const decoded_access_token = (await verifyToken({
+                token: authorization[1],
+                publicKey: process.env.SECURITY_JWT_SECRET_ACCESS_TOKEN as string
+              })) as TokenPayload
+              if (!decoded_access_token || decoded_access_token.token_type !== TokenType.AccessToken) {
+                throw new Error(MESSAGE.AUTHENTICATE_MESSAGE.ACCESS_TOKEN_INVALID)
+              }
+              const user = await databaseService.users.findOne({
+                _id: new ObjectId(decoded_access_token.user_id)
+              })
+              if (!user) {
+                throw new Error(MESSAGE.AUTHENTICATE_MESSAGE.USER_DOES_NOT_EXIST)
+              }
+              ;(req as Request).user = user
+            } catch {
+              throw new Error(MESSAGE.AUTHENTICATE_MESSAGE.ACCESS_TOKEN_INVALID)
+            }
+            return true
+          }
+        }
+      },
+      refresh_token: {
+        optional: true,
+        trim: true,
+        isString: {
+          errorMessage: MESSAGE.AUTHENTICATE_MESSAGE.REFRESH_TOKEN_MUST_BE_A_STRING
+        },
+        custom: {
+          options: async (value, { req }) => {
+            if (!value) return true
+            try {
+              const decoded_refresh_token = (await verifyToken({
+                token: value,
+                publicKey: process.env.SECURITY_JWT_SECRET_REFRESH_TOKEN as string
+              })) as TokenPayload
+              if (!decoded_refresh_token || decoded_refresh_token.token_type !== TokenType.RefreshToken) {
+                throw new Error(MESSAGE.AUTHENTICATE_MESSAGE.REFRESH_TOKEN_INVALID)
+              }
+              const refresh_token = await databaseService.refreshToken.findOne({ token: value })
+              if (!refresh_token) {
+                throw new Error(MESSAGE.AUTHENTICATE_MESSAGE.REFRESH_TOKEN_INVALID)
+              }
+              const user = await databaseService.users.findOne({
+                _id: refresh_token.user_id
+              })
+              if (!user) {
+                throw new Error(MESSAGE.AUTHENTICATE_MESSAGE.USER_DOES_NOT_EXIST)
+              }
+              ;(req as Request).user = user
+            } catch {
+              throw new Error(MESSAGE.AUTHENTICATE_MESSAGE.REFRESH_TOKEN_INVALID)
+            }
+            return true
+          }
+        }
+      }
+    },
+    ['headers', 'body']
+  )
+    .run(req)
+    .then(() => {
+      const errors = validationResult(req)
+      if (!errors.isEmpty()) {
+        res.status(HTTPSTATUS.UNAUTHORIZED).json({
+          code: RESPONSE_CODE.AUTHENTICATION_FAILED,
+          message: MESSAGE.AUTHENTICATE_MESSAGE.AUTHENTICATION_FAILED,
+          errors: errors.mapped()
+        })
+        return
+      }
+      next()
+    })
+    .catch((err) => {
+      res.status(HTTPSTATUS.UNPROCESSABLE_ENTITY).json({
+        code: RESPONSE_CODE.FATAL_AUTHENTICATION_FAILURE,
+        message: err.message
+      })
+    })
+}

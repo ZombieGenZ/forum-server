@@ -79,7 +79,7 @@ export const colorTextValidator = (req: Request, res: Response, next: NextFuncti
     body.textColorType === null ||
     typeof body.textColorType !== 'number' ||
     body.textColorType < 0 ||
-    body.colorType > 3
+    body.textColorType > 3
   ) {
     res.status(HTTPSTATUS.UNPROCESSABLE_ENTITY).json({
       code: RESPONSE_CODE.COLOR_INVALID,
