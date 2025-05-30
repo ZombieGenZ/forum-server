@@ -27,7 +27,7 @@ export const createCommentController = async (
   } catch (err) {
     res.json({
       code: RESPONSE_CODE.CREATE_POST_FAILED,
-      message: MESSAGE.POST_MESSAGE.CREATE_POST_FAILURE
+      message: MESSAGE.COMMENT_MESSAGE.CREATE_COMMENT_FAILURE
     })
   }
 }
@@ -43,12 +43,12 @@ export const updateCommentController = async (
 
     res.json({
       code: RESPONSE_CODE.UPDATE_COMMENT_SUCCESSFUL,
-      message: MESSAGE.COMMENT_MESSAGE.UPDATE_COMMENT_FAILURE
+      message: MESSAGE.COMMENT_MESSAGE.UPDATE_COMMENT_SUCCESS
     })
   } catch (err) {
     res.json({
       code: RESPONSE_CODE.UPDATE_COMMENT_FAILED,
-      message: MESSAGE.POST_MESSAGE.UPDATE_POST_FAILURE
+      message: MESSAGE.COMMENT_MESSAGE.UPDATE_COMMENT_FAILURE
     })
   }
 }
@@ -62,12 +62,12 @@ export const deleteCommentController = async (
 
     res.json({
       code: RESPONSE_CODE.DELETE_COMMENT_SUCCESSFUL,
-      message: MESSAGE.COMMENT_MESSAGE.DELETE_COMMENT_FAILURE
+      message: MESSAGE.COMMENT_MESSAGE.DELETE_COMMENT_SUCCESS
     })
   } catch (err) {
     res.json({
       code: RESPONSE_CODE.DELETE_COMMENT_FAILED,
-      message: MESSAGE.POST_MESSAGE.DELETE_POST_FAILURE
+      message: MESSAGE.COMMENT_MESSAGE.DELETE_COMMENT_FAILURE
     })
   }
 }
@@ -83,13 +83,13 @@ export const getCommentController = async (
 
     res.json({
       code: RESPONSE_CODE.GET_COMMENT_SUCCESSFUL,
-      message: MESSAGE.COMMENT_MESSAGE.GET_COMMENT_FAILURE,
+      message: MESSAGE.COMMENT_MESSAGE.GET_COMMENT_SUCCESS,
       comments
     })
   } catch (err) {
     res.json({
       code: RESPONSE_CODE.GET_COMMENT_FAILED,
-      message: MESSAGE.POST_MESSAGE.GET_POST_FAILURE
+      message: MESSAGE.COMMENT_MESSAGE.GET_COMMENT_FAILURE
     })
   }
 }

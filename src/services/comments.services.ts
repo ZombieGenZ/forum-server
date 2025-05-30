@@ -41,7 +41,7 @@ class CommentService {
     })
   }
   async getComment(post_id: string, user?: User) {
-    return await databaseService.comments
+    const comments = await databaseService.comments
       .aggregate([
         {
           $match: {
@@ -65,19 +65,18 @@ class CommentService {
             'user.verify_token': 0,
             'user.forget_password_token': 0
           }
-        },
-        {
-          $addFields: {
-            can_edit: {
-              $or: [
-                { $eq: ['$user._id', new ObjectId(user?._id)] },
-                { $eq: ['$user.user_role', UserRoleEnum.ADMINISTRATOR] }
-              ]
-            }
-          }
         }
       ])
       .toArray()
+
+    return comments.map((comment) => ({
+      ...comment,
+      can_edit: !(
+        !user ||
+        comment.user._id.toString() !== user._id.toString() ||
+        user.user_role !== UserRoleEnum.ADMINISTRATOR
+      )
+    }))
   }
 }
 

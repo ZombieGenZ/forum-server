@@ -209,28 +209,26 @@ export const deleteCommentValidator = (req: Request, res: Response, next: NextFu
 export const getCommentValidator = (req: Request, res: Response, next: NextFunction) => {
   checkSchema(
     {
-      comment_id: {
+      post_id: {
         notEmpty: {
-          errorMessage: MESSAGE.COMMENT_MESSAGE.COMMENT_ID_IS_REQUIRED
+          errorMessage: MESSAGE.COMMENT_MESSAGE.POST_ID_IS_REQUIRED
         },
         trim: true,
         isString: {
-          errorMessage: MESSAGE.COMMENT_MESSAGE.COMMENT_ID_MUST_BE_A_STRING
+          errorMessage: MESSAGE.COMMENT_MESSAGE.POST_ID_MUST_BE_A_STRING
         },
         isMongoId: {
-          errorMessage: MESSAGE.COMMENT_MESSAGE.COMMENT_ID_MUST_BE_A_ID
+          errorMessage: MESSAGE.COMMENT_MESSAGE.POST_ID_MUST_BE_A_ID
         },
         custom: {
-          options: async (value, { req }) => {
-            const comment = await databaseService.comments.findOne({
+          options: async (value) => {
+            const post = await databaseService.posts.findOne({
               _id: new ObjectId(value)
             })
 
-            if (!comment) {
-              throw new Error(MESSAGE.COMMENT_MESSAGE.COMMENT_ID_NOT_FOUND)
+            if (!post) {
+              throw new Error(MESSAGE.COMMENT_MESSAGE.POST_ID_NOT_FOUND)
             }
-
-            ;(req as Request).comment = comment
 
             return true
           }

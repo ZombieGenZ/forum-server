@@ -328,6 +328,59 @@ export const verifyTokenValidator = async (
     })
 }
 
+export const getUserStatisticalValidator = async (req: Request, res: Response, next: NextFunction) => {
+  checkSchema(
+    {
+      username: {
+        notEmpty: {
+          errorMessage: MESSAGE.USER_MESSAGE.USERNAME_IS_REQUIRED
+        },
+        trim: true,
+        isString: {
+          errorMessage: MESSAGE.USER_MESSAGE.USERNAME_MUST_BE_A_STRING
+        },
+        custom: {
+          options: async (value, { req }) => {
+            const result = await databaseService.users.findOne({
+              _id: new ObjectId(value)
+            })
+
+            if (!result) {
+              throw new Error(MESSAGE.USER_MESSAGE.USER_NOT_FOUND)
+            }
+
+            ;(req as Request).user = result
+
+            return true
+          }
+        }
+      }
+    },
+    ['body']
+  )
+    .run(req)
+    .then(() => {
+      const errors = validationResult(req)
+      if (!errors.isEmpty()) {
+        res.status(HTTPSTATUS.UNPROCESSABLE_ENTITY).json({
+          code: RESPONSE_CODE.INPUT_DATA_ERROR,
+          message: MESSAGE.SYSTEM_MESSAGE.VALIDATION_ERROR,
+          errors: errors.mapped()
+        })
+        return
+      }
+      next()
+      return
+    })
+    .catch((err) => {
+      res.status(HTTPSTATUS.UNPROCESSABLE_ENTITY).json({
+        code: RESPONSE_CODE.FATAL_INPUT_ERROR,
+        message: err
+      })
+      return
+    })
+}
+
 // export const sendVerifyTokenValidator = async (req: Request, res: Response, next: NextFunction) => {
 //   const user = req.user as User
 

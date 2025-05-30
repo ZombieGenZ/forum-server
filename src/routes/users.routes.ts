@@ -18,7 +18,8 @@ import { authenticateValidator } from '~/middlewares/authenticate.middlewares'
 import {
   registerUserValidator,
   loginUserValidator,
-  verifyTokenValidator
+  verifyTokenValidator,
+  getUserStatisticalValidator
   // sendVerifyTokenValidator,
   // verifyAccountValidator,
   // sendEmailForgotPasswordValidator,
@@ -93,6 +94,17 @@ router.post('/verify-token', verifyTokenValidator, wrapRequestHandler(verifyToke
  * }
  */
 router.post('/get-user-infomation', authenticateValidator, wrapRequestHandler(getUserInfomationController))
+
+/*
+ * Description: Lấy thông tin user
+ * Path: /api/users/get-user-statistical
+ * Method: GET
+ * query: {
+ *    username: string
+ * }
+ */
+router.get('/get-user-statistical', getUserStatisticalValidator)
+
 
 // /*
 //  * Description: Gửi lại mã xác thực tài khoản

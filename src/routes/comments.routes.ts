@@ -68,9 +68,9 @@ router.delete('/delete', authenticateValidator, deleteCommentValidator, wrapRequ
  * },
  * body: {
  *    refresh_token?: string,
- *    comment_id: string
+ *    post_id: string
  * }
  */
-router.delete('/delete', haveUserValidator, getCommentValidator, wrapRequestHandler(getCommentController))
+router.post('/get-comments', haveUserValidator, getCommentValidator, wrapRequestHandler(getCommentController))
 
 export default router

@@ -144,6 +144,14 @@ export const deleteTopicValidator = async (req: Request, res: Response, next: Ne
               throw new Error(MESSAGE.TOPIC_MESSAGE.TOPIC_ID_NOT_FOUND)
             }
 
+            const post = await databaseService.posts.findOne({
+              topic: result._id
+            })
+
+            if (post) {
+              throw new Error(MESSAGE.TOPIC_MESSAGE.TOPIC_IS_BEING_USED_ON_THE_POST)
+            }
+
             ;(req as Request).topic = result
 
             return true

@@ -114,15 +114,8 @@ router.delete(
 /*
  * Description: Lấy thông tin chủ đề
  * Path: /api/topics/get-topic
- * Method: POST
- * headers: {
- *    authorization: Bearer <token>
- * },
- * Body: {
- *    refresh_token: string,
- *    topic: string
- * }
+ * Method: GET
  */
-router.post('/get-topic', authenticateValidator, verifiedAccountValidator, wrapRequestHandler(getTopicController))
+router.get('/get-topic', wrapRequestHandler(getTopicController))
 
 export default router
