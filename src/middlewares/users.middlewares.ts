@@ -342,7 +342,7 @@ export const getUserStatisticalValidator = async (req: Request, res: Response, n
         custom: {
           options: async (value, { req }) => {
             const result = await databaseService.users.findOne({
-              _id: new ObjectId(value)
+              username: value
             })
 
             if (!result) {
@@ -356,7 +356,7 @@ export const getUserStatisticalValidator = async (req: Request, res: Response, n
         }
       }
     },
-    ['body']
+    ['query']
   )
     .run(req)
     .then(() => {

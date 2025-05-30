@@ -42,8 +42,9 @@ export const updatePostController = async (
   try {
     const topic = req.topic as Topic
     const user = req.user as User
+    const post = req.post as Post
 
-    await postService.update(req.body, user, topic)
+    await postService.update(req.body, user, topic, post)
 
     res.json({
       code: RESPONSE_CODE.UPDATE_POST_SUCCESSFUL,

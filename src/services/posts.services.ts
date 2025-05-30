@@ -40,8 +40,8 @@ class PostService {
       )
     ])
   }
-  async update(payload: UpdatePostRequestBody, user: User, topic: Topic) {
-    const url = await generateUrl(payload.title)
+  async update(payload: UpdatePostRequestBody, user: User, topic: Topic, post: Post) {
+    const url = await generateUrl(payload.title, post.url)
 
     const summary = await summaryContent(payload.content)
 

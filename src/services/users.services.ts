@@ -142,6 +142,57 @@ class UserService {
       token: token
     })
   }
+  async getUserStatistical(user_id: ObjectId) {
+    return {
+      total_posts: await databaseService.posts.countDocuments({
+        user: user_id
+      }),
+      total_comments: await databaseService.comments.countDocuments({
+        user: user_id
+      }),
+      total_views: 0
+    }
+  }
+  async getUserPost(user_id: ObjectId) {
+    return await databaseService.posts
+      .aggregate([
+        {
+          $match: {
+            user: user_id
+          }
+        },
+        {
+          $lookup: {
+            from: process.env.DATABASE_TOPIC_COLLECTION as string,
+            localField: 'topic',
+            foreignField: '_id',
+            as: 'topic'
+          }
+        },
+        {
+          $unwind: '$topic'
+        },
+        {
+          $lookup: {
+            from: process.env.DATABASE_USER_COLLECTION,
+            localField: 'user',
+            foreignField: '_id',
+            as: 'user'
+          }
+        },
+        {
+          $unwind: '$user'
+        },
+        {
+          $project: {
+            'user.password': 0,
+            'user.verify_token': 0,
+            'user.forget_password_token': 0
+          }
+        }
+      ])
+      .toArray()
+  }
   // async sendEmailVerify(user: User) {
   //   const verifyToken = await this.signEmailVerify(user._id.toString())
   //   const verifyUrl = `${process.env.APP_URL}/verify-account?token=${verifyToken}`

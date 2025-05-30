@@ -4,6 +4,7 @@ import {
   // changePasswordController,
   // forgotPasswordController,
   getUserInfomationController,
+  getUserStatisticalController,
   loginUserController,
   logoutUserController,
   registerUserController,
@@ -103,8 +104,7 @@ router.post('/get-user-infomation', authenticateValidator, wrapRequestHandler(ge
  *    username: string
  * }
  */
-router.get('/get-user-statistical', getUserStatisticalValidator)
-
+router.get('/get-user-statistical', getUserStatisticalValidator, wrapRequestHandler(getUserStatisticalController))
 
 // /*
 //  * Description: Gửi lại mã xác thực tài khoản

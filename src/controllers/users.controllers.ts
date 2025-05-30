@@ -178,12 +178,34 @@ export const getUserInfomationController = async (
   res: Response
 ) => {
   const user = req.user as User
-  
+
   try {
     res.json({
       code: RESPONSE_CODE.GET_USER_INFOMATION_SUCCESSFUL,
       message: MESSAGE.USER_MESSAGE.GET_USER_INFORMATION_SUCCESS,
       account: omit(user, ['password', 'verify_token', 'forgot_password_token'])
+    })
+  } catch (err) {
+    res.json({
+      code: RESPONSE_CODE.GET_USER_INFOMATION_FAILED,
+      message: MESSAGE.USER_MESSAGE.GET_USER_INFORMATION_FAILURE
+    })
+  }
+}
+
+export const getUserStatisticalController = async (req: Request, res: Response) => {
+  const user = req.user as User
+
+  try {
+    const statistical = await userService.getUserStatistical(user._id)
+    const posts = await userService.getUserPost(user._id)
+
+    res.json({
+      code: RESPONSE_CODE.GET_USER_INFOMATION_SUCCESSFUL,
+      message: MESSAGE.USER_MESSAGE.GET_USER_INFORMATION_SUCCESS,
+      account: omit(user, ['password', 'verify_token', 'forgot_password_token']),
+      statistical,
+      posts
     })
   } catch (err) {
     res.json({
