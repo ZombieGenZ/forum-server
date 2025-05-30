@@ -150,7 +150,13 @@ class UserService {
       total_comments: await databaseService.comments.countDocuments({
         user: user_id
       }),
-      total_views: 0
+      total_views: await databaseService.posts
+        .aggregate([
+          { $match: { user: new ObjectId(user_id) } },
+          { $group: { _id: null, totalViews: { $sum: '$total_view' } } }
+        ])
+        .toArray()
+        .then((res: any[]) => (res.length > 0 ? res[0].totalViews : 0))
     }
   }
   async getUserPost(user_id: ObjectId) {

@@ -63,7 +63,7 @@ import api_file_management from '~/routes/fileManagement.routes'
 import api_topics from '~/routes/topics.routes'
 import api_posts from '~/routes/posts.routes'
 import api_comments from '~/routes/comments.routes'
-// import api_voucher_private from '~/routes/voucherPrivate.routes'
+import api_views from '~/routes/views.routes'
 // import api_order from '~/routes/orders.routes'
 // import api_statistical from '~/routes/statistical.routes'
 // import api_account_management from '~/routes/accountManagement.routes'
@@ -76,7 +76,7 @@ app.use('/api/file-management', api_file_management)
 app.use('/api/topics', api_topics)
 app.use('/api/posts', api_posts)
 app.use('/api/comments', api_comments)
-// app.use('/api/voucher-private', api_voucher_private)
+app.use('/api/views', api_views)
 // app.use('/api/orders', api_order)
 // app.use('/api/statistical', api_statistical)
 // app.use('/api/account-management', api_account_management)

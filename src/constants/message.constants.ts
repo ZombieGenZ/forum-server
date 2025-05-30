@@ -162,4 +162,13 @@ export class MESSAGE {
     GET_COMMENT_SUCCESS: 'Lấy thông tin bình luận thành công',
     GET_COMMENT_FAILURE: 'Lấy thông tin bình luận thất bại'
   }
+
+  static VIEW_MESSAGE = {
+    POST_ID_IS_REQUIRED: 'Không được bỏ trống ID bài viết',
+    POST_ID_MUST_BE_A_STRING: 'ID bài viết phải là một chuỗi ký tự',
+    POST_ID_MUST_BE_A_ID: 'ID bài viết phải là một ID hợp lệ',
+    POST_ID_NOT_FOUND: 'ID bài viết không tồn tại',
+    VIEW_POST_SUCCESS: 'Xem bài viết thành công',
+    VIEW_POST_FAILURE: 'Xem bài viết thất bại'
+  }
 }

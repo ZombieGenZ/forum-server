@@ -6,6 +6,7 @@ import Image from '~/models/schemas/images.shemas'
 import Post from '~/models/schemas/posts.shemas'
 import Topic from '~/models/schemas/topics.shemas'
 import Comment from '~/models/schemas/comments.shemas'
+import View from '~/models/schemas/views.shemas'
 
 dotenv.config()
 
@@ -49,6 +50,9 @@ class DatabaseService {
   }
   get comments(): Collection<Comment> {
     return this.db.collection(process.env.DATABASE_COMMENT_COLLECTION as string)
+  }
+  get views(): Collection<View> {
+    return this.db.collection(process.env.DATABASE_VIEW_COLLECTION as string)
   }
 }
 

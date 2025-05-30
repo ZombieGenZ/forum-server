@@ -8,6 +8,7 @@ interface PostType {
   user: ObjectId
   url: string
   topic: ObjectId
+  total_view?: number
   created_at?: Date
   created_by?: ObjectId
   updated_at?: Date
@@ -22,6 +23,7 @@ export default class Post {
   user: ObjectId
   url: string
   topic: ObjectId
+  total_view: number
   created_at: Date
   created_by: ObjectId
   updated_at: Date
@@ -37,6 +39,7 @@ export default class Post {
     this.user = post.user
     this.url = post.url
     this.topic = post.topic
+    this.total_view = post.total_view || 0
     this.created_at = post.created_at || date
     this.created_by = post.created_by || post.user
     this.updated_at = post.updated_at || date
