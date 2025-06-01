@@ -388,26 +388,29 @@ export const forgotPasswordController = async (
   const user = req.user as User
 
   try {
-    const ipData = (await axios.get(`https://ipinfo.io/${ip}/?token=${process.env.IPINFO_TOKEN}`)).data
-    const [latitude, longitude] = ipData.loc.split(',')
-    const locationData = await axios.get(
-      `https://nominatim.openstreetmap.org/reverse?format=json&lat=${latitude}&lon=${longitude}`
-    )
-    const userAgent = req.useragent
-    const deviceInfo = {
-      isMobile: userAgent?.isMobile,
-      browser: userAgent?.browser,
-      os: userAgent?.os
-    }
+    let change_location: string | undefined = undefined
+    let change_ip: string | undefined = undefined
+    let change_browser: string | undefined = undefined
+    let change_os: string | undefined = undefined
+    try {
+      const ipData = (await axios.get(`https://ipinfo.io/${ip}/?token=${process.env.IPINFO_TOKEN}`)).data
+      const [latitude, longitude] = ipData.loc.split(',')
+      const locationData = await axios.get(
+        `https://nominatim.openstreetmap.org/reverse?format=json&lat=${latitude}&lon=${longitude}`
+      )
+      const userAgent = req.useragent
+      const deviceInfo = {
+        isMobile: userAgent?.isMobile,
+        browser: userAgent?.browser,
+        os: userAgent?.os
+      }
+      change_location = locationData.data.display_name
+      change_ip = ip
+      change_browser = deviceInfo.browser as string
+      change_os = deviceInfo.os as string
+    } catch {}
 
-    await userService.forgotPassword(
-      user,
-      req.body,
-      locationData.data.display_name,
-      ip,
-      deviceInfo.browser as string,
-      deviceInfo.os as string
-    )
+    await userService.forgotPassword(user, req.body, change_location, change_ip, change_browser, change_os)
 
     res.json({
       code: RESPONSE_CODE.FORGOT_PASSWORD_SUCCESSFUL,
@@ -422,64 +425,67 @@ export const forgotPasswordController = async (
   }
 }
 
-// export const changeInformationController = async (
-//   req: Request<ParamsDictionary, any, ChangeInfomationRequestBody>,
-//   res: Response
-// ) => {
-//   const user = req.user as User
+export const changeInformationController = async (
+  req: Request<ParamsDictionary, any, ChangeInfomationRequestBody>,
+  res: Response
+) => {
+  const user = req.user as User
 
-//   try {
-//     await userService.changeInfomation(req.body, user)
+  try {
+    await userService.changeInfomation(req.body, user)
 
-//     res.json({
-//       code: RESPONSE_CODE.CHANGE_INFORMATION_SUCCESSFUL,
-//       message: MESSAGE.USER_MESSAGE.CHANGE_INFORMATION_SUCCESS
-//     })
-//   } catch (err) {
-//     res.json({
-//       code: RESPONSE_CODE.CHANGE_INFORMATION_FAILED,
-//       message: MESSAGE.USER_MESSAGE.CHANGE_INFORMATION_FAILURE
-//     })
-//   }
-// }
+    res.json({
+      code: RESPONSE_CODE.CHANGE_INFORMATION_SUCCESSFUL,
+      message: MESSAGE.USER_MESSAGE.CHANGE_INFORMATION_SUCCESS
+    })
+  } catch (err) {
+    res.json({
+      code: RESPONSE_CODE.CHANGE_INFORMATION_FAILED,
+      message: MESSAGE.USER_MESSAGE.CHANGE_INFORMATION_FAILURE
+    })
+  }
+}
 
-// export const changePasswordController = async (
-//   req: Request<ParamsDictionary, any, ChangePasswordRequestBody>,
-//   res: Response
-// ) => {
-//   const ip = (req.headers['cf-connecting-ip'] || req.ip) as string
-//   const user = req.user as User
+export const changePasswordController = async (
+  req: Request<ParamsDictionary, any, ChangePasswordRequestBody>,
+  res: Response
+) => {
+  const ip = (req.headers['cf-connecting-ip'] || req.ip) as string
+  const user = req.user as User
 
-//   try {
-//     const ipData = (await axios.get(`https://ipinfo.io/${ip}/?token=${process.env.IPINFO_TOKEN}`)).data
-//     const [latitude, longitude] = ipData.loc.split(',')
-//     const locationData = await axios.get(
-//       `https://nominatim.openstreetmap.org/reverse?format=json&lat=${latitude}&lon=${longitude}`
-//     )
-//     const userAgent = req.useragent
-//     const deviceInfo = {
-//       isMobile: userAgent?.isMobile,
-//       browser: userAgent?.browser,
-//       os: userAgent?.os
-//     }
+  try {
+    let change_location: string | undefined = undefined
+    let change_ip: string | undefined = undefined
+    let change_browser: string | undefined = undefined
+    let change_os: string | undefined = undefined
+    try {
+      const ipData = (await axios.get(`https://ipinfo.io/${ip}/?token=${process.env.IPINFO_TOKEN}`)).data
+      const [latitude, longitude] = ipData.loc.split(',')
+      const locationData = await axios.get(
+        `https://nominatim.openstreetmap.org/reverse?format=json&lat=${latitude}&lon=${longitude}`
+      )
+      const userAgent = req.useragent
+      const deviceInfo = {
+        isMobile: userAgent?.isMobile,
+        browser: userAgent?.browser,
+        os: userAgent?.os
+      }
+      change_location = locationData.data.display_name
+      change_ip = ip
+      change_browser = deviceInfo.browser as string
+      change_os = deviceInfo.os as string
+    } catch {}
 
-//     await userService.changePassword(
-//       req.body,
-//       user,
-//       locationData.data.display_name,
-//       ip,
-//       deviceInfo.browser as string,
-//       deviceInfo.os as string
-//     )
+    await userService.changePassword(req.body, user, change_location, change_ip, change_browser, change_os)
 
-//     res.json({
-//       code: RESPONSE_CODE.CHANGE_PASSWORD_SUCCESSFUL,
-//       message: MESSAGE.USER_MESSAGE.CHANGE_PASSWORD_SUCCESS
-//     })
-//   } catch (err) {
-//     res.json({
-//       code: RESPONSE_CODE.CHANGE_PASSWORD_FAILED,
-//       message: MESSAGE.USER_MESSAGE.CHANGE_PASSWORD_FAILURE
-//     })
-//   }
-// }
+    res.json({
+      code: RESPONSE_CODE.CHANGE_PASSWORD_SUCCESSFUL,
+      message: MESSAGE.USER_MESSAGE.CHANGE_PASSWORD_SUCCESS
+    })
+  } catch (err) {
+    res.json({
+      code: RESPONSE_CODE.CHANGE_PASSWORD_FAILED,
+      message: MESSAGE.USER_MESSAGE.CHANGE_PASSWORD_FAILURE
+    })
+  }
+}

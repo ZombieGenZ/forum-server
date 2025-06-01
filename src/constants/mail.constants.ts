@@ -135,7 +135,7 @@ export const MAIL = {
         </table>
       </div>`
   }),
-  CHANGE_PASSWORD: (time: string, location: string, ip: string, browser: string, os: string) => ({
+  CHANGE_PASSWORD: (time: string, location?: string, ip?: string, browser?: string, os?: string) => ({
     subject: `Thông Báo Thay Đổi Mật Khẩu - ${process.env.TRADEMARK_NAME}`,
     html: `
       <div style="margin: 0; padding: 0; font-family: Arial, sans-serif; background-color: #f4f4f4;">
@@ -158,10 +158,10 @@ export const MAIL = {
                     </p>
                     <ul style="font-size: 16px; color: #333333; line-height: 1.6; margin: 0 0 20px; padding-left: 20px;">
                       <li><strong>Thời gian:</strong> ${time}</li>  
-                      <li><strong>Địa điểm:</strong> ${location}</li>
-                      <li><strong>Địa chỉ IP:</strong> ${ip}</li>
-                      <li><strong>Trình duyệt:</strong> ${browser}</li>
-                      <li><strong>Hệ điều hành:</strong> ${os}</li>
+                      <li><strong>Địa điểm:</strong> ${location || 'Không xác định'}</li>
+                      <li><strong>Địa chỉ IP:</strong> ${ip || 'Không xác định'}</li>
+                      <li><strong>Trình duyệt:</strong> ${browser || 'Không xác định'}</li>
+                      <li><strong>Hệ điều hành:</strong> ${os || 'Không xác định'}</li>
                     </ul>
                     <p style="font-size: 16px; color: #333333; line-height: 1.6; margin: 0 0 20px;">
                       Nếu bạn thực hiện thay đổi này, bạn không cần làm gì thêm. Nếu bạn không thực hiện thay đổi này, vui lòng bảo mật tài khoản của bạn ngay lập tức bằng cách <a href="${process.env.APP_URL}/forgot-password" style="color: #3498db; text-decoration: none;">đặt lại mật khẩu</a> và liên hệ với chúng tôi.

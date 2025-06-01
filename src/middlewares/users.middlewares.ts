@@ -670,204 +670,223 @@ export const forgotPasswordValidator = async (req: Request, res: Response, next:
     })
 }
 
-// export const changeInformationValidator = async (req: Request, res: Response, next: NextFunction) => {
-//   checkSchema(
-//     {
-//       display_name: {
-//         notEmpty: {
-//           errorMessage: MESSAGE.USER_MESSAGE.DISPLAY_NAME_IS_REQUIRED
-//         },
-//         trim: true,
-//         isString: {
-//           errorMessage: MESSAGE.USER_MESSAGE.DISPLAY_NAME_MUST_BE_A_STRING
-//         },
-//         isLength: {
-//           options: {
-//             min: 5,
-//             max: 100
-//           },
-//           errorMessage: MESSAGE.USER_MESSAGE.DISPLAY_NAME_LENGTH_MUST_BE_FROM_1_TO_50
-//         }
-//       },
-//       username: {
-//         notEmpty: {
-//           errorMessage: MESSAGE.USER_MESSAGE.USERNAME_IS_REQUIRED
-//         },
-//         trim: true,
-//         isString: {
-//           errorMessage: MESSAGE.USER_MESSAGE.USERNAME_MUST_BE_A_STRING
-//         },
-//         isLength: {
-//           options: {
-//             min: 3,
-//             max: 50
-//           },
-//           errorMessage: MESSAGE.USER_MESSAGE.USERNAME_LENGTH_MUST_BE_FROM_3_TO_50
-//         },
-//         matches: {
-//           options: /^[a-zA-Z0-9]+$/,
-//           errorMessage: MESSAGE.USER_MESSAGE.USERNAME_MUST_BE_ALPHANUMERIC
-//         },
-//         custom: {
-//           options: async (value) => {
-//             const result = await userService.checkUserNameExits(value)
+export const changeInformationValidator = async (req: Request, res: Response, next: NextFunction) => {
+  checkSchema(
+    {
+      username: {
+        notEmpty: {
+          errorMessage: MESSAGE.USER_MESSAGE.USERNAME_IS_REQUIRED
+        },
+        trim: true,
+        isString: {
+          errorMessage: MESSAGE.USER_MESSAGE.USERNAME_MUST_BE_A_STRING
+        },
+        isLength: {
+          options: {
+            min: 3,
+            max: 50
+          },
+          errorMessage: MESSAGE.USER_MESSAGE.USERNAME_LENGTH_MUST_BE_FROM_3_TO_50
+        },
+        matches: {
+          options: /^[a-zA-Z0-9]+$/,
+          errorMessage: MESSAGE.USER_MESSAGE.USERNAME_MUST_BE_ALPHANUMERIC
+        },
+        custom: {
+          options: async (value) => {
+            const user = req.user as User
 
-//             if (result) {
-//               throw new Error(MESSAGE.USER_MESSAGE.USERNAME_ALREADY_EXISTS)
-//             }
+            if (user.username !== value) {
+              const result = await userService.checkUserNameExits(value)
 
-//             return true
-//           }
-//         }
-//       },
-//       phone: {
-//         notEmpty: {
-//           errorMessage: MESSAGE.USER_MESSAGE.PHONE_IS_REQUIRED
-//         },
-//         trim: true,
-//         isString: {
-//           errorMessage: MESSAGE.USER_MESSAGE.PHONE_MUST_BE_A_STRING
-//         },
-//         isLength: {
-//           options: {
-//             min: 10,
-//             max: 11
-//           },
-//           errorMessage: MESSAGE.USER_MESSAGE.PHONE_LENGTH_MUST_BE_FROM_10_TO_11
-//         },
-//         isMobilePhone: {
-//           errorMessage: MESSAGE.USER_MESSAGE.PHONE_IS_NOT_VALID
-//         },
-//         custom: {
-//           options: async (value) => {
-//             const result = await userService.checkPhoneExits(value)
+              if (result) {
+                throw new Error(MESSAGE.USER_MESSAGE.USERNAME_ALREADY_EXISTS)
+              }
+            }
 
-//             if (result) {
-//               throw new Error(MESSAGE.USER_MESSAGE.PHONE_ALREADY_EXISTS)
-//             }
+            return true
+          }
+        }
+      },
+      display_name: {
+        notEmpty: {
+          errorMessage: MESSAGE.USER_MESSAGE.DISPLAY_NAME_IS_REQUIRED
+        },
+        trim: true,
+        isString: {
+          errorMessage: MESSAGE.USER_MESSAGE.DISPLAY_NAME_MUST_BE_A_STRING
+        },
+        isLength: {
+          options: {
+            min: 1,
+            max: 50
+          },
+          errorMessage: MESSAGE.USER_MESSAGE.DISPLAY_NAME_LENGTH_MUST_BE_FROM_1_TO_50
+        }
+      },
+      phone: {
+        notEmpty: {
+          errorMessage: MESSAGE.USER_MESSAGE.PHONE_IS_REQUIRED
+        },
+        trim: true,
+        isString: {
+          errorMessage: MESSAGE.USER_MESSAGE.PHONE_MUST_BE_A_STRING
+        },
+        isLength: {
+          options: {
+            min: 10,
+            max: 11
+          },
+          errorMessage: MESSAGE.USER_MESSAGE.PHONE_LENGTH_MUST_BE_FROM_10_TO_11
+        },
+        isMobilePhone: {
+          errorMessage: MESSAGE.USER_MESSAGE.PHONE_IS_NOT_VALID
+        },
+        custom: {
+          options: async (value) => {
+            const user = req.user as User
 
-//             return true
-//           }
-//         }
-//       }
-//     },
-//     ['body']
-//   )
-//     .run(req)
-//     .then(() => {
-//       const errors = validationResult(req)
-//       if (!errors.isEmpty()) {
-//         res.status(HTTPSTATUS.UNPROCESSABLE_ENTITY).json({
-//           code: RESPONSE_CODE.INPUT_DATA_ERROR,
-//           message: MESSAGE.SYSTEM_MESSAGE.VALIDATION_ERROR,
-//           errors: errors.mapped()
-//         })
-//         return
-//       }
-//       next()
-//       return
-//     })
-//     .catch((err) => {
-//       res.status(HTTPSTATUS.UNPROCESSABLE_ENTITY).json({
-//         code: RESPONSE_CODE.FATAL_INPUT_ERROR,
-//         message: err
-//       })
-//       return
-//     })
-// }
+            if (user.phone !== value) {
+              const result = await userService.checkPhoneExits(value)
 
-// export const changePasswordValidator = async (req: Request, res: Response, next: NextFunction) => {
-//   checkSchema(
-//     {
-//       password: {
-//         notEmpty: {
-//           errorMessage: MESSAGE.USER_MESSAGE.PASSWORD_IS_REQUIRED
-//         },
-//         trim: true,
-//         isString: {
-//           errorMessage: MESSAGE.USER_MESSAGE.PASSWORD_MUST_BE_A_STRING
-//         },
-//         custom: {
-//           options: async (value) => {
-//             const user = req.user as User
+              if (result) {
+                throw new Error(MESSAGE.USER_MESSAGE.PHONE_ALREADY_EXISTS)
+              }
+            }
 
-//             if (HashPassword(value) !== user.password) {
-//               throw new Error(MESSAGE.USER_MESSAGE.INCORRECT_PASSWORD)
-//             }
+            return true
+          }
+        }
+      }
+    },
+    ['body']
+  )
+    .run(req)
+    .then(() => {
+      const errors = validationResult(req)
+      if (!errors.isEmpty()) {
+        res.status(HTTPSTATUS.UNPROCESSABLE_ENTITY).json({
+          code: RESPONSE_CODE.INPUT_DATA_ERROR,
+          message: MESSAGE.SYSTEM_MESSAGE.VALIDATION_ERROR,
+          errors: errors.mapped()
+        })
+        return
+      }
+      next()
+      return
+    })
+    .catch((err) => {
+      res.status(HTTPSTATUS.UNPROCESSABLE_ENTITY).json({
+        code: RESPONSE_CODE.FATAL_INPUT_ERROR,
+        message: err
+      })
+      return
+    })
+}
 
-//             return
-//           }
-//         }
-//       },
-//       new_password: {
-//         notEmpty: {
-//           errorMessage: MESSAGE.USER_MESSAGE.PASSWORD_IS_REQUIRED
-//         },
-//         trim: true,
-//         isString: {
-//           errorMessage: MESSAGE.USER_MESSAGE.PASSWORD_MUST_BE_A_STRING
-//         },
-//         isLength: {
-//           options: {
-//             min: 8,
-//             max: 100
-//           },
-//           errorMessage: MESSAGE.USER_MESSAGE.PASSWORD_LENGTH_MUST_BE_FROM_8_TO_100
-//         },
-//         isStrongPassword: {
-//           errorMessage: MESSAGE.USER_MESSAGE.PASSWORD_MUST_BE_STRONG
-//         }
-//       },
-//       confirm_new_password: {
-//         notEmpty: {
-//           errorMessage: MESSAGE.USER_MESSAGE.CONFIRM_PASSWORD_IS_REQUIRED
-//         },
-//         trim: true,
-//         isString: {
-//           errorMessage: MESSAGE.USER_MESSAGE.CONFIRM_PASSWORD_MUST_BE_A_STRING
-//         },
-//         isLength: {
-//           options: {
-//             min: 8,
-//             max: 100
-//           },
-//           errorMessage: MESSAGE.USER_MESSAGE.CONFIRM_PASSWORD_LENGTH_MUST_BE_FROM_8_TO_100
-//         },
-//         isStrongPassword: {
-//           errorMessage: MESSAGE.USER_MESSAGE.CONFIRM_PASSWORD_MUST_BE_STRONG
-//         },
-//         custom: {
-//           options: async (value, { req }) => {
-//             if (value !== req.body.new_password) {
-//               throw new Error(MESSAGE.USER_MESSAGE.CONFIRM_PASSWORD_DOES_NOT_MATCH_PASSWORD)
-//             }
+export const changePasswordValidator = async (req: Request, res: Response, next: NextFunction) => {
+  checkSchema(
+    {
+      password: {
+        notEmpty: {
+          errorMessage: MESSAGE.USER_MESSAGE.PASSWORD_IS_REQUIRED
+        },
+        trim: true,
+        isString: {
+          errorMessage: MESSAGE.USER_MESSAGE.PASSWORD_MUST_BE_A_STRING
+        },
+        custom: {
+          options: async (value) => {
+            const user = req.user as User
 
-//             return true
-//           }
-//         }
-//       }
-//     },
-//     ['body']
-//   )
-//     .run(req)
-//     .then(() => {
-//       const errors = validationResult(req)
-//       if (!errors.isEmpty()) {
-//         res.status(HTTPSTATUS.UNPROCESSABLE_ENTITY).json({
-//           code: RESPONSE_CODE.INPUT_DATA_ERROR,
-//           message: MESSAGE.SYSTEM_MESSAGE.VALIDATION_ERROR,
-//           errors: errors.mapped()
-//         })
-//         return
-//       }
-//       next()
-//       return
-//     })
-//     .catch((err) => {
-//       res.status(HTTPSTATUS.UNPROCESSABLE_ENTITY).json({
-//         code: RESPONSE_CODE.FATAL_INPUT_ERROR,
-//         message: err
-//       })
-//       return
-//     })
-// }
+            if (HashPassword(value) !== user.password) {
+              throw new Error(MESSAGE.USER_MESSAGE.INCORRECT_PASSWORD)
+            }
+
+            return
+          }
+        }
+      },
+      new_password: {
+        notEmpty: {
+          errorMessage: MESSAGE.USER_MESSAGE.PASSWORD_IS_REQUIRED
+        },
+        trim: true,
+        isString: {
+          errorMessage: MESSAGE.USER_MESSAGE.PASSWORD_MUST_BE_A_STRING
+        },
+        isLength: {
+          options: {
+            min: 8,
+            max: 100
+          },
+          errorMessage: MESSAGE.USER_MESSAGE.PASSWORD_LENGTH_MUST_BE_FROM_8_TO_100
+        },
+        isStrongPassword: {
+          errorMessage: MESSAGE.USER_MESSAGE.PASSWORD_MUST_BE_STRONG
+        },
+        custom: {
+          options: async (value, { req }) => {
+            const user = req.user as User
+
+            if (HashPassword(value) === user.password) {
+              throw new Error(MESSAGE.USER_MESSAGE.PASSWORD_MUST_NOT_BE_THE_SAME_AS_THE_OLD_PASSWORD)
+            }
+
+            return
+          }
+        }
+      },
+      confirm_new_password: {
+        notEmpty: {
+          errorMessage: MESSAGE.USER_MESSAGE.CONFIRM_PASSWORD_IS_REQUIRED
+        },
+        trim: true,
+        isString: {
+          errorMessage: MESSAGE.USER_MESSAGE.CONFIRM_PASSWORD_MUST_BE_A_STRING
+        },
+        isLength: {
+          options: {
+            min: 8,
+            max: 100
+          },
+          errorMessage: MESSAGE.USER_MESSAGE.CONFIRM_PASSWORD_LENGTH_MUST_BE_FROM_8_TO_100
+        },
+        isStrongPassword: {
+          errorMessage: MESSAGE.USER_MESSAGE.CONFIRM_PASSWORD_MUST_BE_STRONG
+        },
+        custom: {
+          options: async (value, { req }) => {
+            if (value !== req.body.new_password) {
+              throw new Error(MESSAGE.USER_MESSAGE.CONFIRM_PASSWORD_DOES_NOT_MATCH_PASSWORD)
+            }
+
+            return true
+          }
+        }
+      }
+    },
+    ['body']
+  )
+    .run(req)
+    .then(() => {
+      const errors = validationResult(req)
+      if (!errors.isEmpty()) {
+        res.status(HTTPSTATUS.UNPROCESSABLE_ENTITY).json({
+          code: RESPONSE_CODE.INPUT_DATA_ERROR,
+          message: MESSAGE.SYSTEM_MESSAGE.VALIDATION_ERROR,
+          errors: errors.mapped()
+        })
+        return
+      }
+      next()
+      return
+    })
+    .catch((err) => {
+      res.status(HTTPSTATUS.UNPROCESSABLE_ENTITY).json({
+        code: RESPONSE_CODE.FATAL_INPUT_ERROR,
+        message: err
+      })
+      return
+    })
+}

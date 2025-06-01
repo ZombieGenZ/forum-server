@@ -18,6 +18,7 @@ import RefreshToken from '~/models/schemas/refreshtoken.schemas'
 import { TokenPayload } from '~/models/requests/authentication.requests'
 import { UserTypeEnum } from '~/constants/users.constants'
 import { formatDateFull2 } from '~/utils/date.utils'
+import { ColorType } from '~/constants/colors.constants'
 
 class UserService {
   async checkUserNameExits(username: string) {
@@ -250,22 +251,20 @@ class UserService {
     }
   }
   async verifyAccount(user: User) {
-    await Promise.all([
-      databaseService.users.updateOne(
-        {
-          _id: user._id
+    await databaseService.users.updateOne(
+      {
+        _id: user._id
+      },
+      {
+        $set: {
+          user_type: UserTypeEnum.VERIFIED,
+          verify_token: ''
         },
-        {
-          $set: {
-            user_type: UserTypeEnum.VERIFIED,
-            verify_token: ''
-          },
-          $currentDate: {
-            updated_at: true
-          }
+        $currentDate: {
+          updated_at: true
         }
-      )
-    ])
+      }
+    )
   }
   async sendForgotPassword(user: User) {
     const forgotPasswordToken = await this.signForgotPassword(user._id.toString())
@@ -322,10 +321,10 @@ class UserService {
   async forgotPassword(
     user: User,
     payload: ForgotPasswordRequestBody,
-    location: string,
-    ip: string,
-    browser: string,
-    os: string
+    location?: string,
+    ip?: string,
+    browser?: string,
+    os?: string
   ) {
     const date = formatDateFull2(new Date())
     const email_change_password_subject = MAIL.CHANGE_PASSWORD(date, location, ip, browser, os).subject
@@ -352,68 +351,114 @@ class UserService {
       sendMail(user.email, email_change_password_subject, email_change_password_html)
     ])
   }
-  // async changeInfomation(payload: ChangeInfomationRequestBody, user: User) {
-  //   // const data = {
-  //   //   display_name: payload.display_name,
-  //   //   phone: payload.phone
-  //   // }
+  async changeInfomation(payload: ChangeInfomationRequestBody, user: User) {
+    if (
+      payload.textColorType &&
+      payload.textBasicColor &&
+      payload.textGradient2Color1 &&
+      payload.textGradient2Color2 &&
+      payload.textGradient3Color1 &&
+      payload.textGradient3Color2 &&
+      payload.textGradient3Color3
+    ) {
+      let text_color
+      if (payload.textColorType == ColorType.COLOR_BASIC) {
+        text_color = {
+          type: ColorType.COLOR_BASIC,
+          color: {
+            color: payload.textBasicColor as string
+          }
+        }
+      } else if (payload.textColorType == ColorType.COLOR_GRADIENT_2) {
+        text_color = {
+          type: ColorType.COLOR_GRADIENT_2,
+          color: {
+            color1: payload.textGradient2Color1 as string,
+            color2: payload.textGradient2Color2 as string
+          }
+        }
+      } else if (payload.textColorType == ColorType.COLOR_GRADIENT_3) {
+        text_color = {
+          type: ColorType.COLOR_GRADIENT_3,
+          color: {
+            color1: payload.textGradient3Color1 as string,
+            color2: payload.textGradient3Color2 as string,
+            color3: payload.textGradient3Color3 as string
+          }
+        }
+      } else {
+        text_color = {
+          type: ColorType.COLOR_RAMBOW,
+          color: null
+        }
+      }
 
-  //   await Promise.all([
-  //     databaseService.users.updateOne(
-  //       {
-  //         _id: user._id
-  //       },
-  //       {
-  //         $set: {
-  //           display_name: payload.display_name,
-  //           username: payload.username,
-  //           phone: payload.phone
-  //         },
-  //         $currentDate: {
-  //           updated_at: true
-  //         }
-  //       }
-  //     )
-  //     // notificationRealtime(`freshSync-admin`, 'change-infomation', `account-management/change-infomation`, data)
-  //   ])
-  // }
-  // async changePassword(
-  //   payload: ChangePasswordRequestBody,
-  //   user: User,
-  //   location: string,
-  //   ip: string,
-  //   browser: string,
-  //   os: string
-  // ) {
-  //   const date = formatDateFull2(new Date())
-  //   const email_change_password_subject = MAIL.CHANGE_PASSWORD(date, location, ip, browser, os).subject
-  //   const email_change_password_html = MAIL.CHANGE_PASSWORD(date, location, ip, browser, os).html
+      await databaseService.users.updateOne(
+        {
+          _id: user._id
+        },
+        {
+          $set: {
+            display_name: payload.display_name,
+            username: payload.username,
+            phone: payload.phone,
+            display_color: text_color
+          },
+          $currentDate: {
+            updated_at: true
+          }
+        }
+      )
+    } else {
+      await databaseService.users.updateOne(
+        {
+          _id: user._id
+        },
+        {
+          $set: {
+            display_name: payload.display_name,
+            username: payload.username,
+            phone: payload.phone
+          },
+          $currentDate: {
+            updated_at: true
+          }
+        }
+      )
+    }
+  }
+  async changePassword(
+    payload: ChangePasswordRequestBody,
+    user: User,
+    location?: string,
+    ip?: string,
+    browser?: string,
+    os?: string
+  ) {
+    const date = formatDateFull2(new Date())
+    const email_change_password_subject = MAIL.CHANGE_PASSWORD(date, location, ip, browser, os).subject
+    const email_change_password_html = MAIL.CHANGE_PASSWORD(date, location, ip, browser, os).html
 
-  //   // const data = {
-  //   //   date
-  //   // }
-
-  //   await Promise.all([
-  //     databaseService.users.updateOne(
-  //       {
-  //         _id: user._id
-  //       },
-  //       {
-  //         $set: {
-  //           password: HashPassword(payload.new_password)
-  //         },
-  //         $currentDate: {
-  //           updated_at: true
-  //         }
-  //       }
-  //     ),
-  //     databaseService.refreshToken.deleteMany({
-  //       user_id: user._id
-  //     }),
-  //     // notificationRealtime(`freshSync-user-${user._id}`, 'logout', `user/${user._id}/logout`, data),
-  //     sendMail(user.email, email_change_password_subject, email_change_password_html)
-  //   ])
-  // }
+    await Promise.all([
+      databaseService.users.updateOne(
+        {
+          _id: user._id
+        },
+        {
+          $set: {
+            password: HashPassword(payload.new_password)
+          },
+          $currentDate: {
+            updated_at: true
+          }
+        }
+      ),
+      databaseService.refreshToken.deleteMany({
+        user_id: user._id
+      }),
+      sendMail(user.email, email_change_password_subject, email_change_password_html)
+    ])
+  }
 }
 
 const userService = new UserService()

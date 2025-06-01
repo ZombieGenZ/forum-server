@@ -79,6 +79,7 @@ export class MESSAGE {
     CHANGE_INFORMATION_SUCCESS: 'Cập nhật thông tin tài khoản thành công',
     CHANGE_INFORMATION_FAILURE: 'Cập nhật thông tin tài khoản thất bại',
     INCORRECT_PASSWORD: 'Mật khẩu không chính xác',
+    PASSWORD_MUST_NOT_BE_THE_SAME_AS_THE_OLD_PASSWORD: 'Mật khẩu mới không được trùng với mật khẩu cũ',
     VERIFY_FORGOT_PASSWORD_TOKEN_SUCCESS: 'Xác thực token yêu cầu đặt lại mật khẩu thành công',
     VERIFY_FORGOT_PASSWORD_TOKEN_FAILURE: 'Xác thực token yêu cầu đặt lại mật khẩu thất bại',
     VERIFY_EMAIL_VERIFY_TOKEN_SUCCESS: 'Xác thực token xác thực tài khoản thành công',

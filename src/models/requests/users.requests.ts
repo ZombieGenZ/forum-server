@@ -38,9 +38,16 @@ export interface ForgotPasswordRequestBody {
 }
 
 export interface ChangeInfomationRequestBody {
-  display_name: string
   username: string
+  display_name: string
   phone: string
+  textColorType?: number
+  textBasicColor?: string
+  textGradient2Color1?: string
+  textGradient2Color2?: string
+  textGradient3Color1?: string
+  textGradient3Color2?: string
+  textGradient3Color3?: string
 }
 
 export interface ChangePasswordRequestBody {

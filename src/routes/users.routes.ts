@@ -1,7 +1,5 @@
 import express from 'express'
 import {
-  // changeInformationController,
-  // changePasswordController,
   getUserInfomationController,
   getUserStatisticalController,
   loginUserController,
@@ -13,9 +11,12 @@ import {
   sendEmailForgotPasswordController,
   verifyForgotPasswordTokenController,
   forgotPasswordController,
-  verifyTokenUserController
+  verifyTokenUserController,
+  changeInformationController,
+  changePasswordController
 } from '~/controllers/users.controllers'
 import { authenticateValidator } from '~/middlewares/authenticate.middlewares'
+import { colorDisplayTextValidator } from '~/middlewares/colors.middlewares'
 import {
   registerUserValidator,
   loginUserValidator,
@@ -25,9 +26,9 @@ import {
   verifyAccountValidator,
   sendEmailForgotPasswordValidator,
   verifyForgotPasswordTokenValidator,
-  forgotPasswordValidator
-  // changeInformationValidator,
-  // changePasswordValidator
+  forgotPasswordValidator,
+  changeInformationValidator,
+  changePasswordValidator
 } from '~/middlewares/users.middlewares'
 import { wrapRequestHandler } from '~/utils/handlers.utils'
 const router = express.Router()
@@ -187,45 +188,54 @@ router.post(
  */
 router.put('/forgot-password', forgotPasswordValidator, wrapRequestHandler(forgotPasswordController))
 
-// /*
-//  * Description: Thay đổi thông tin tài khoản
-//  * Path: /api/users/change-infomation
-//  * Method: PUT
-//  * headers: {
-//  *    authorization?: Bearer <token>
-//  * },
-//  * body: {
-//  *    refresh_token: string,
-//  *    display_name: string,
-//  *    phone: string
-//  * }
-//  */
-// router.put(
-//   '/change-infomation',
-//   authenticateValidator,
-//   changeInformationValidator,
-//   wrapRequestHandler(changeInformationController)
-// )
+/*
+ * Description: Thay đổi thông tin tài khoản
+ * Path: /api/users/change-infomation
+ * Method: PUT
+ * headers: {
+ *    authorization?: Bearer <token>
+ * },
+ * body: {
+ *    refresh_token: string,
+ *    username: string,
+ *    display_name: string,
+ *    phone: string,
+ *    textColorType: number,
+ *    textBasicColor?: string,
+ *    textGradient2Color1?: string,
+ *    textGradient2Color2?: string,
+ *    textGradient3Color1?: string,
+ *    textGradient3Color2?: string,
+ *    textGradient3Color3?: string
+ * }
+ */
+router.put(
+  '/change-infomation',
+  authenticateValidator,
+  changeInformationValidator,
+  colorDisplayTextValidator,
+  wrapRequestHandler(changeInformationController)
+)
 
-// /*
-//  * Description: Thay đổi mật khẩu
-//  * Path: /api/users/change-password
-//  * Method: PUT
-//  * headers: {
-//  *    authorization?: Bearer <token>
-//  * },
-//  * body: {
-//  *    refresh_token: string,
-//  *    password: string,
-//  *    new_password: string,
-//  *    confirm_new_password: string
-//  * }
-//  */
-// router.put(
-//   '/change-password',
-//   authenticateValidator,
-//   changePasswordValidator,
-//   wrapRequestHandler(changePasswordController)
-// )
+/*
+ * Description: Thay đổi mật khẩu
+ * Path: /api/users/change-password
+ * Method: PUT
+ * headers: {
+ *    authorization?: Bearer <token>
+ * },
+ * body: {
+ *    refresh_token: string,
+ *    password: string,
+ *    new_password: string,
+ *    confirm_new_password: string
+ * }
+ */
+router.put(
+  '/change-password',
+  authenticateValidator,
+  changePasswordValidator,
+  wrapRequestHandler(changePasswordController)
+)
 
 export default router
