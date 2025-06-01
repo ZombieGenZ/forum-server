@@ -14,7 +14,7 @@ interface UserType {
   user_role?: UserRoleEnum
   is_verified?: boolean
   verify_token?: string
-  forget_password_token?: string
+  forgot_password_token?: string
   created_at?: Date
   updated_at?: Date
 }
@@ -31,7 +31,7 @@ export default class User {
   user_role: UserRoleEnum
   is_verified: boolean
   verify_token: string
-  forget_password_token: string
+  forgot_password_token: string
   created_at: Date
   updated_at: Date
 
@@ -54,7 +54,7 @@ export default class User {
     this.user_role = user.user_role || UserRoleEnum.MEMBER
     this.is_verified = user.is_verified || false
     this.verify_token = user.verify_token || ''
-    this.forget_password_token = user.forget_password_token || ''
+    this.forgot_password_token = user.forget_password_token || ''
     this.created_at = user.created_at || date
     this.updated_at = user.updated_at || date
   }
