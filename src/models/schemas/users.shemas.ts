@@ -54,7 +54,7 @@ export default class User {
     this.user_role = user.user_role || UserRoleEnum.MEMBER
     this.is_verified = user.is_verified || false
     this.verify_token = user.verify_token || ''
-    this.forgot_password_token = user.forget_password_token || ''
+    this.forgot_password_token = user.forgot_password_token || ''
     this.created_at = user.created_at || date
     this.updated_at = user.updated_at || date
   }
