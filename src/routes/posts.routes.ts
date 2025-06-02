@@ -5,6 +5,7 @@ import {
   deletePostController,
   getPostController,
   getPostDetailController,
+  getStatisticalController,
   updatePostController
 } from '~/controllers/posts.controllers'
 import { authenticateValidator, verifiedAccountValidator } from '~/middlewares/authenticate.middlewares'
@@ -119,5 +120,12 @@ router.post(
   checkEditPostPostValidator,
   wrapRequestHandler(checkEditPostController)
 )
+
+/*
+ * Description: Lấy thông tin user
+ * Path: /api/users/get-statistical
+ * Method: GET
+ */
+router.get('/get-statistical', wrapRequestHandler(getStatisticalController))
 
 export default router

@@ -182,6 +182,17 @@ class PostService {
       ])
       .next()
   }
+  async getUserStatistical() {
+    return {
+      total_posts: await databaseService.posts.countDocuments({}),
+      total_comments: await databaseService.comments.countDocuments({}),
+      total_users: await databaseService.users.countDocuments({}),
+      total_views: await databaseService.posts
+        .aggregate([{ $group: { _id: null, totalViews: { $sum: '$total_view' } } }])
+        .toArray()
+        .then((res: any[]) => (res.length > 0 ? res[0].totalViews : 0))
+    }
+  }
 }
 
 const postService = new PostService()

@@ -134,3 +134,20 @@ export const checkEditPostController = async (
     })
   }
 }
+
+export const getStatisticalController = async (req: Request, res: Response) => {
+  try {
+    const statistical = await postService.getUserStatistical()
+
+    res.json({
+      code: RESPONSE_CODE.GET_POST_SUCCESSFUL,
+      message: MESSAGE.POST_MESSAGE.GET_POST_SUCCESS,
+      statistical
+    })
+  } catch (err) {
+    res.json({
+      code: RESPONSE_CODE.GET_POST_FAILED,
+      message: MESSAGE.POST_MESSAGE.GET_POST_FAILURE
+    })
+  }
+}
