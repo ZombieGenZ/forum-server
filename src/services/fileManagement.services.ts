@@ -6,15 +6,14 @@ import { uploadAllToDrive } from '~/utils/drive.utils'
 
 class FileManagementService {
   async upload(image: ImageType, user_id: ObjectId) {
-    await Promise.all([
-      databaseService.images.insertOne(
-        new Image({
-          ...image,
-          user: user_id
-        })
-      ),
-      uploadAllToDrive()
-    ])
+    await databaseService.images.insertOne(
+      new Image({
+        ...image,
+        user: user_id
+      })
+    )
+
+    uploadAllToDrive()
   }
 }
 
