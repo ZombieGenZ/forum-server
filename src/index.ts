@@ -16,6 +16,7 @@ import { ObjectId } from 'mongodb'
 // import { UserRoleEnum } from './constants/users.constants'
 import expressUserAgent from 'express-useragent'
 // import runAllCrons from './jobs/global.jobs'
+import { downloadAllFromDrive } from './utils/drive.utils'
 import { defaultErrorHandler, notFoundHandler } from './middlewares/errors.middlewares'
 
 dotenv.config()
@@ -64,7 +65,6 @@ import api_topics from '~/routes/topics.routes'
 import api_posts from '~/routes/posts.routes'
 import api_comments from '~/routes/comments.routes'
 import api_views from '~/routes/views.routes'
-import { uploadAllToDrive } from './utils/drive.utils'
 // import api_order from '~/routes/orders.routes'
 // import api_statistical from '~/routes/statistical.routes'
 // import api_account_management from '~/routes/accountManagement.routes'
@@ -405,6 +405,7 @@ app.use(defaultErrorHandler)
 // })
 
 server.listen(port, async () => {
+  await downloadAllFromDrive()
   // await writeInfoLog(`Thời gian chạy máy chủ ${formatDateFull2(serverRunningTime)}`)
   console.log()
   // console.log(`\x1b[33mThời gian chạy máy chủ \x1b[36m${formatDateFull2(serverRunningTime)}\x1b[0m`)
