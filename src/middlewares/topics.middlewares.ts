@@ -137,7 +137,6 @@ export const deleteTopicValidator = async (req: Request, res: Response, next: Ne
         },
         custom: {
           options: async (value) => {
-            // MARK: Thêm validator nếu có post đang sử dụng topic này
             const result = await databaseService.topics.findOne({ _id: new ObjectId(value) })
 
             if (!result) {

@@ -198,10 +198,6 @@ export const loginUserValidator = async (req: Request, res: Response, next: Next
         },
         custom: {
           options: async (value, { req }) => {
-            // const result = await databaseService.users.findOne({
-            //   $or: [{ email: value }, { phone: value }, { username: value }],
-            //   password: HashPassword(req.body.password)
-            // })
             const result = await databaseService.users.findOne({
               email: value,
               password: HashPassword(req.body.password)
